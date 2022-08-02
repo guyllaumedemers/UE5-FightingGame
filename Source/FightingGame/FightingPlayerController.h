@@ -21,6 +21,8 @@ protected:
 
 	virtual void SetupInputComponent() override;
 
+private:
+
 	UFUNCTION()
 	void BindPlayerControllerInputs(APawn* OldPawnControlled, APawn* NewPawnControlled);
 };

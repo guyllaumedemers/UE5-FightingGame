@@ -30,14 +30,16 @@ private:
 
 	TArray<FInputKey> InputStack;
 
-	FORCEINLINE void AddKey(const FInputKey& FInputKey)		{ OnInputCaptureDelEvent.Execute(FInputKey); InputStack.Add(FInputKey); };
-	FORCEINLINE void PopKey()								{ InputStack.Pop(); };
+	FORCEINLINE bool IsValidKey(const FInputKey& FInputKey) const	{ return FInputKey.KeyHandle == EKeyHandle::None; }
+	FORCEINLINE void AddKey(const FInputKey& FInputKey)				{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); InputStack.Add(FInputKey); };
+	FORCEINLINE void PopKey()										{ InputStack.Pop(); };
 	FInputKey ConvertFKey(const FKey&);
-	FORCEINLINE void ClearStack()							{ while (InputStack.Max() > 0) PopKey(); };
+	FInputKey ParseKey(const FString&);
+	FORCEINLINE void ClearStack()									{ while (InputStack.Num() > 0) PopKey(); };
 
 	double TimeElapse = 0.f;
 
 	FORCEINLINE bool IsElapseTimeGreater(const double& value) const								{ return TimeElapse >= value; };
 	FORCEINLINE bool IsLastCaptureTimeGreaterThanMaxThreshold(const FInputKey& FInputKey) const	{ return IsElapseTimeGreater(FInputKey.MaxResetThreshold); };
-	FORCEINLINE void ResetInputString()															{ TimeElapse = 0.f; OnInputStringCompleteDelEvent.Execute(); }
+	FORCEINLINE void ResetInputString()															{ TimeElapse = 0.f; OnInputStringCompleteDelEvent.ExecuteIfBound(); }
 };

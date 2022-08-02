@@ -10,5 +10,4 @@ UCLASS()
 class FIGHTINGGAME_API AFightingGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };

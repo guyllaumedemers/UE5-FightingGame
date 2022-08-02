@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InputActionTableRow.h"
 #include "GameFramework/Character.h"
 #include "FightingCharacterBase.generated.h"
 
+class UDataTable;
 class UInputBufferComponent;
 
 UCLASS()
@@ -32,9 +32,9 @@ public:
 
 	FORCEINLINE TObjectPtr<UInputBufferComponent> GetInputBufferComponent() const		{ return PlayerInputBufferComponent; }
 	FORCEINLINE bool GetIsPlayerCancelled() const										{ return IsPlayerCancelled; }
-	FORCEINLINE void SetIsPlayerCancelled(const bool& value)							{ IsPlayerCancelled = value; if (value) OnCharacterCancelledDelEvent.Execute(CancellationTime); }
+	FORCEINLINE void SetIsPlayerCancelled(const bool& value)							{ IsPlayerCancelled = value; if (value) OnCharacterCancelledDelEvent.ExecuteIfBound(CancellationTime); }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Data Table");
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = InputTable, meta=(AllowedClasses="FInputActionTableRow"));
 	TObjectPtr<UDataTable> SharedInputDataTable;
 
 private:

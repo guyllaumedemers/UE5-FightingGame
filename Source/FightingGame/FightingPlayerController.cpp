@@ -28,8 +28,8 @@ void AFightingPlayerController::SetupInputComponent()
 }
 
 /*
- * AcknowledgedPawn is used in net -> might not be the proper information needed.
- * Pc looks for the APawn controlled to bind inputs in regard to the APawn configuration.
+ *	AcknowledgedPawn is used in net -> might not be the proper information needed.
+ *	Pc looks for the APawn controlled to bind inputs in regard to the APawn configuration.
  *
  *		Character_A: Jab, Press X
  *		Character_B: Jab, Press Y

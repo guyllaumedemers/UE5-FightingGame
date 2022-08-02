@@ -3,3 +3,7 @@
 
 #include "FightingGameState.h"
 
+AFightingGameState::AFightingGameState(const FObjectInitializer& FObjectInitializer)
+{
+	CanPlayersMove = true;
+}

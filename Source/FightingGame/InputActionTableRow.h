@@ -44,16 +44,16 @@ struct FInputKey
 	FInputKey() : KeyHandle(EKeyHandle::None), DirectionalHandle(EDirectionalHandle::None), MinResetThreshold(0.f), MaxResetThreshold(0.f)
 	{}
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Bitmask, BitmaskEnum = EKeyHandle, ShortTooltip = "Bitmask for 1,2,3,4 Combination"));
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = EKeyHandle, ShortTooltip = "Bitmask for 1,2,3,4 Combination"));
 	EKeyHandle KeyHandle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Bitmask, BitmaskEnum = EDirectionalHandle, ShortTooltip = "Bitmask for F,U,D,B Combination"));
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = EDirectionalHandle, ShortTooltip = "Bitmask for F,U,D,B Combination"));
 	EDirectionalHandle DirectionalHandle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ShortTooltip = "Frame Perfect Execution"));
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ShortTooltip = "Frame Perfect Execution"));
 	float MinResetThreshold;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ShortTooltip = "Max Frame Execution Possible"));
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ShortTooltip = "Max Frame Execution Possible"));
 	float MaxResetThreshold;
 };
 

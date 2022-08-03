@@ -34,7 +34,7 @@ private:
 	FORCEINLINE void AddKey(const FInputKey& FInputKey)				{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); InputStack.Add(FInputKey); };
 	FORCEINLINE void PopKey()										{ InputStack.Pop(); };
 	FInputKey ConvertFKey(const FKey&);
-	FInputKey ParseKey(const FString&);
+	FInputKey ParseKey(FString);
 	FORCEINLINE void ClearStack()									{ while (InputStack.Num() > 0) PopKey(); };
 
 	double TimeElapse = 0.f;

@@ -23,7 +23,6 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 			const FInputKey CapturedKey = ConvertFKey(FKey);
 			if (IsValidKey(CapturedKey))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("%s"), CapturedKey.KeyHandle);
 				if (IsLastCaptureTimeGreaterThanMaxThreshold(CapturedKey)) ResetInputString();
 				else AddKey(CapturedKey);
 			}
@@ -53,7 +52,9 @@ FInputKey UInputBufferComponent::ConvertFKey(const FKey& FKey)
 		int SIndex = 0;
 		while (ActionMapControls.FindChar(';', SIndex))
 		{
-			FString SubStr = TEXT(""); FKeyToFInputKeyMap.Add(SubStr = ActionMapControls.Left(SIndex), ParseKey(SubStr));
+			const FString SubStr = ActionMapControls.Left(SIndex);
+
+			FKeyToFInputKeyMap.Add(SubStr, ParseKey(SubStr));
 			ActionMapControls.RemoveFromStart(SubStr + TEXT(";"));
 		}
 
@@ -63,7 +64,44 @@ FInputKey UInputBufferComponent::ConvertFKey(const FKey& FKey)
 	return Result;
 }
 
-FInputKey UInputBufferComponent::ParseKey(const FString& SubStr)
+FInputKey UInputBufferComponent::ParseKey(FString SubStr)
 {
-	return FInputKey();
+	// DefaultInput.ini
+
+	// Key = Gamepad_DPad_Up
+	// Key = Gamepad_DPad_Down
+	// Key = Gamepad_DPad_Right
+	// Key = Gamepad_DPad_Left
+	// Key = Gamepad_FaceButton_Bottom
+	// Key = Gamepad_FaceButton_Right
+	// Key = Gamepad_FaceButton_Left
+	// Key = Gamepad_FaceButton_Top
+	// Key = Gamepad_LeftShoulder
+	// Key = Gamepad_LeftTrigger
+	// Key = Gamepad_RightShoulder
+	// Key = Gamepad_RightTrigger
+
+	FInputKey Result;
+
+	FString ControllerFName = TEXT("");
+	FString ControllerActionType = TEXT("");
+	FString ControllerActionValue = TEXT("");
+
+	int SIndex = 0;
+	while (SubStr.FindChar('_', SIndex))
+	{
+		const FString ParseResult = SubStr.Left(SIndex);
+		if (ControllerFName.IsEmpty()) ControllerFName = ParseResult;
+		else if (ControllerActionType.IsEmpty()) ControllerActionType = ParseResult;
+		SubStr.RemoveFromStart(ParseResult + TEXT("_"));
+	}
+	/*
+	 *	Don't really like this, what if we had more complex Input String. Example: Vive_Right_Trigger_Axis
+	 *	Input Parsing should always be: {ControllerType}, {ControllerActionType}, {ControllerActionValue}
+	 *
+	 *	Maybe I should parse searching for Cap letters? To think on...
+	 */
+	if (ControllerActionType.IsEmpty()) ControllerActionType = SubStr;
+	else ControllerActionType = SubStr;
+	return Result;
 }

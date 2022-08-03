@@ -33,6 +33,9 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 
 FInputKey UInputBufferComponent::ConvertFKey(const FKey& FKey)
 {
+	/*
+	 *	Under development, Should be cached once and accessed
+	 */
 	FInputKey Result;
 	UInputSettings* InputSetting = UInputSettings::GetInputSettings();
 

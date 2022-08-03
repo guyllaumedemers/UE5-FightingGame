@@ -2,6 +2,13 @@
 
 > Input Mapping uses Gamepad Setup which natively support XBOX Controller ONLY. To Run commands using PS4/PS5 Controller, Additional requirements are needed. PLEASE install [DS4Windows](https://github.com/Ryochan7/DS4Windows).
 
+### [PROJECT PATH](https://github.com/guyllaumedemers/UE5-FightingGame/tree/master/Source/FightingGame)
+```
+1. AFightingPlayerController
+2. UInputBufferComponent
+3. FInputActionTableRow
+```
+
 ## Why not use Enhance Input System?
 
 > My current understanding of UE5 Enhance Input System let me to believe that the system is limited to multiple assigned key for a single input trigger Action AND can handle a Modifier key with the trigger if needed BUT cannot have a combination of two input entry to trigger a single action which is what im looking for. Either way, it's way more fun to build something out of nothing.

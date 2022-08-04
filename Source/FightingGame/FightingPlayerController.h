@@ -11,9 +11,9 @@ class FIGHTINGGAME_API AFightingPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-	AFightingPlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-
 protected:
+
+	AFightingPlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	virtual void BeginPlay() override;
 

@@ -14,11 +14,9 @@ class FIGHTINGGAME_API AFightingCharacterBase : public ACharacter
 {
 	GENERATED_BODY()
 
-public:
+protected:
 
 	AFightingCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-
-protected:
 
 	virtual void BeginPlay() override;
 
@@ -30,7 +28,7 @@ public:
 
 	double CancellationTime = 0.f;
 
-	FORCEINLINE TObjectPtr<UInputBufferComponent> GetInputBufferComponent() const		{ return PlayerInputBufferComponent; }
+	FORCEINLINE TObjectPtr<UInputBufferComponent> GetPlayerInputBufferComponent() const	{ return PlayerInputBufferComponent; }
 	FORCEINLINE bool GetIsPlayerCancelled() const										{ return IsPlayerCancelled; }
 	FORCEINLINE void SetIsPlayerCancelled(const bool& value)							{ IsPlayerCancelled = value; if (value) OnCharacterCancelledDelEvent.ExecuteIfBound(CancellationTime); }
 

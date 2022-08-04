@@ -11,9 +11,11 @@ class FIGHTINGGAME_API UInputBufferComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
+protected:
 
 	UInputBufferComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+public:
 
 	// Func Referenced by PlayerController for input Callbacks
 	void CaptureInput(FKey);
@@ -33,8 +35,7 @@ private:
 	FORCEINLINE bool IsValidKey(const FInputKey& FInputKey) const	{ return FInputKey.KeyHandle == EKeyHandle::None; }
 	FORCEINLINE void AddKey(const FInputKey& FInputKey)				{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); InputStack.Add(FInputKey); };
 	FORCEINLINE void PopKey()										{ InputStack.Pop(); };
-	FInputKey ConvertFKey(const FKey&);
-	FInputKey ParseKey(FString);
+	FInputKey GetFInputKey(const FKey&);
 	FORCEINLINE void ClearStack()									{ while (InputStack.Num() > 0) PopKey(); };
 
 	double TimeElapse = 0.f;

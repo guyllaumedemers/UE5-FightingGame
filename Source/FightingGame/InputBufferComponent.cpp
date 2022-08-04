@@ -20,7 +20,7 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 		const AFightingCharacterBase* FightingCharacterBase = Cast<AFightingCharacterBase>(GetOwner());
 		if (FightingCharacterBase && !FightingCharacterBase->GetIsPlayerCancelled())
 		{
-			const FInputKey CapturedKey = ConvertFKey(FKey);
+			const FInputKey CapturedKey = GetFInputKey(FKey);
 			if (IsValidKey(CapturedKey))
 			{
 				if (IsLastCaptureTimeGreaterThanMaxThreshold(CapturedKey)) ResetInputString();
@@ -30,78 +30,14 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 	}
 }
 
-FInputKey UInputBufferComponent::ConvertFKey(const FKey& FKey)
+FInputKey UInputBufferComponent::GetFInputKey(const FKey& FKey)
 {
-	/*
-	 *	Under development, Should be cached once and accessed
-	 */
-	FInputKey Result;
-	UInputSettings* InputSetting = UInputSettings::GetInputSettings();
-
-	TArray<FInputActionKeyMapping> OutMapping;
-	InputSetting->GetActionMappingByName("RegisterInput", OutMapping);
-	int Max = 0;
-
-	if (InputSetting && (Max = OutMapping.Num()) > 0)
+	const AFightingGameState* FightingGameState = Cast<AFightingGameState>(GetWorld()->GetGameState());
+	if(FightingGameState)
 	{
-		FString ActionMapControls = TEXT("");
-		int Index = 0;
-		while (Index < Max) { ActionMapControls.Append(OutMapping[Index].Key.ToString() + TEXT(";")); ++Index; }
-
-		TMap<FString, FInputKey> FKeyToFInputKeyMap;
-		int SIndex = 0;
-		while (ActionMapControls.FindChar(';', SIndex))
-		{
-			const FString SubStr = ActionMapControls.Left(SIndex);
-
-			FKeyToFInputKeyMap.Add(SubStr, ParseKey(SubStr));
-			ActionMapControls.RemoveFromStart(SubStr + TEXT(";"));
-		}
-
 		const FString KeyPressed = FKey.GetFName().ToString();
-		if (FKeyToFInputKeyMap.Find(KeyPressed)) return FKeyToFInputKeyMap[KeyPressed];
+		const TMap<FString, FInputKey> UEInputToCustomKeyMap = FightingGameState->GetUEInputToCustomKeyMap();
+		if (UEInputToCustomKeyMap.Find(KeyPressed)) return UEInputToCustomKeyMap[KeyPressed];
 	}
-	return Result;
-}
-
-FInputKey UInputBufferComponent::ParseKey(FString SubStr)
-{
-	// DefaultInput.ini
-
-	// Key = Gamepad_DPad_Up
-	// Key = Gamepad_DPad_Down
-	// Key = Gamepad_DPad_Right
-	// Key = Gamepad_DPad_Left
-	// Key = Gamepad_FaceButton_Bottom
-	// Key = Gamepad_FaceButton_Right
-	// Key = Gamepad_FaceButton_Left
-	// Key = Gamepad_FaceButton_Top
-	// Key = Gamepad_LeftShoulder
-	// Key = Gamepad_LeftTrigger
-	// Key = Gamepad_RightShoulder
-	// Key = Gamepad_RightTrigger
-
-	FInputKey Result;
-
-	FString ControllerFName = TEXT("");
-	FString ControllerActionType = TEXT("");
-	FString ControllerActionValue = TEXT("");
-
-	int SIndex = 0;
-	while (SubStr.FindChar('_', SIndex))
-	{
-		const FString ParseResult = SubStr.Left(SIndex);
-		if (ControllerFName.IsEmpty()) ControllerFName = ParseResult;
-		else if (ControllerActionType.IsEmpty()) ControllerActionType = ParseResult;
-		SubStr.RemoveFromStart(ParseResult + TEXT("_"));
-	}
-	/*
-	 *	Don't really like this, what if we had more complex Input String. Example: Vive_Right_Trigger_Axis
-	 *	Input Parsing should always be: {ControllerType}, {ControllerActionType}, {ControllerActionValue}
-	 *
-	 *	Maybe I should parse searching for Cap letters? To think on...
-	 */
-	if (ControllerActionType.IsEmpty()) ControllerActionType = SubStr;
-	else ControllerActionType = SubStr;
-	return Result;
+	return FInputKey();
 }

@@ -16,4 +16,3 @@ void AFightingCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 }
-

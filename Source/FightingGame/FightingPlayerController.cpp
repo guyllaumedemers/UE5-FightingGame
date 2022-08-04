@@ -42,7 +42,7 @@ void AFightingPlayerController::BindPlayerControllerInputs(APawn* OldPawnControl
 	const AFightingCharacterBase* NewBaseCharacter = Cast<AFightingCharacterBase>(NewPawnControlled);
 	if(NewBaseCharacter)
 	{
-		UInputBufferComponent* BaseCharacterInputBufferComponent = NewBaseCharacter->GetInputBufferComponent();
+		UInputBufferComponent* BaseCharacterInputBufferComponent = NewBaseCharacter->GetPlayerInputBufferComponent();
 		if(BaseCharacterInputBufferComponent)
 		{
 			InputComponent->ClearActionBindings();

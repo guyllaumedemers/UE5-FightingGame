@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "InputActionTableRow.h"
+#include "InputCoreTypes.h"
+#include "Components/ActorComponent.h"
 #include "InputBufferComponent.generated.h"
 
 UCLASS()
@@ -18,7 +21,7 @@ protected:
 public:
 
 	// Func Referenced by PlayerController for input Callbacks
-	void CaptureInput(FKey);
+	void CaptureInput(const FInputActionInstance&);
 
 private:
 
@@ -35,7 +38,7 @@ private:
 	FORCEINLINE bool IsValidKey(const FInputKey& FInputKey) const	{ return FInputKey.KeyHandle == EKeyHandle::None; }
 	FORCEINLINE void AddKey(const FInputKey& FInputKey)				{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); InputStack.Add(FInputKey); };
 	FORCEINLINE void PopKey()										{ InputStack.Pop(); };
-	FInputKey GetFInputKey(const FKey&);
+	FInputKey GetFInputKey(const FInputActionInstance&) const;
 	FORCEINLINE void ClearStack()									{ while (InputStack.Num() > 0) PopKey(); };
 
 	double TimeElapse = 0.f;

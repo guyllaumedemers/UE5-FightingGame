@@ -3,7 +3,10 @@
 
 #include "FightingPlayerController.h"
 #include "FightingCharacterBase.h"
+#include "FightingGameState.h"
 #include "InputBufferComponent.h"
+#include "EnhancedInputComponent.h"
+#include "InputMappingContext.h"
 
 AFightingPlayerController::AFightingPlayerController(const FObjectInitializer& FObjectInitializer)
 {
@@ -39,14 +42,22 @@ void AFightingPlayerController::SetupInputComponent()
  */
 void AFightingPlayerController::BindPlayerControllerInputs(APawn* OldPawnControlled, APawn* NewPawnControlled)
 {
-	const AFightingCharacterBase* NewBaseCharacter = Cast<AFightingCharacterBase>(NewPawnControlled);
-	if(NewBaseCharacter)
+	const AFightingCharacterBase* FightingCharacterBase = Cast<AFightingCharacterBase>(NewPawnControlled);
+	const AFightingGameState* FightingGameState = Cast<AFightingGameState>(GetWorld()->GetGameState());
+
+	if (FightingCharacterBase && FightingGameState)
 	{
-		UInputBufferComponent* BaseCharacterInputBufferComponent = NewBaseCharacter->GetPlayerInputBufferComponent();
-		if(BaseCharacterInputBufferComponent)
+		const UInputBufferComponent* InputBufferComponent = FightingCharacterBase->GetPlayerInputBufferComponent();
+		UEnhancedInputComponent* PlayerEnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
+
+		if (InputBufferComponent && PlayerEnhancedInputComponent)
 		{
-			InputComponent->ClearActionBindings();
-			InputComponent->BindAction("RegisterInput", EInputEvent::IE_Pressed, BaseCharacterInputBufferComponent, &UInputBufferComponent::CaptureInput);
+			for (const auto& it : FightingGameState->GetDefaultInputMappingContext()->GetMappings())
+			{
+				// Issue with delegate binding, require fix
+
+				//PlayerEnhancedInputComponent->BindAction(it.Action, ETriggerEvent::Triggered, InputBufferComponent, &UInputBufferComponent::CaptureInput);
+			}
 		}
 	}
 }

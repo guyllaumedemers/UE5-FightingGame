@@ -3,97 +3,45 @@
 
 #include "FightingGameState.h"
 #include "GameFramework/InputSettings.h"
+#include "UObject/ConstructorHelpers.h"
+#include "EnhancedInput/Public/InputMappingContext.h"
 
 AFightingGameState::AFightingGameState(const FObjectInitializer& FObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	CanPlayersMove = true;
+
+	const auto AssetFound = ConstructorHelpers::FObjectFinder<UInputMappingContext>(TEXT("/Game/ProjectContent/Tables/IMC_InputRecord.IMC_InputRecord"));
+	if (AssetFound.Succeeded()) DefaultInputMappingContext = AssetFound.Object;
 }
 
 void AFightingGameState::BeginPlay()
 {
 	Super::BeginPlay();
-	RegisterInputs();
-	for (auto it : UEInputToCustomKeyMap)
+
+	// Parsing Input Mapping Context, Retrieve all IA and Map to usable Data Collection
+	if(DefaultInputMappingContext)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *(it.Key));
-	}
-}
-
-void AFightingGameState::RegisterInputs()
-{
-	UInputSettings* InputSetting = UInputSettings::GetInputSettings();
-
-	if (InputSetting)
-	{
-		TArray<FInputActionKeyMapping> OutMapping;
-		InputSetting->GetActionMappingByName("RegisterInput", OutMapping);
-		int Max = 0;
-
-		if ((Max = OutMapping.Num()) > 0)
+		for(const auto& it : DefaultInputMappingContext->GetMappings())
 		{
-			FString ActionMapControls = TEXT("");
-			int Index = 0;
-			while (Index < Max) { ActionMapControls.Append(OutMapping[Index].Key.ToString() + TEXT(";")); ++Index; }
-			
+			FString ActionName = it.Action->GetFName().ToString();
 			int SIndex = 0;
-			while (ActionMapControls.FindChar(';', SIndex))
+			while (ActionName.FindChar('_', SIndex))
 			{
-				const FString SubStr = ActionMapControls.Left(SIndex);
-
-				this->UEInputToCustomKeyMap.Add(SubStr, ParseKey(SubStr));
-				ActionMapControls.RemoveFromStart(SubStr + TEXT(";"));
+				const FString SubStr = ActionName.Left(SIndex);
+				ActionName.RemoveFromStart(SubStr + TEXT("_"));
 			}
+			/*
+			 *	TO COMPLETE, Create TMap Values Entry by Parsing IA FName since IA can only Retrieve Engine Built Value, bool - float - vector
+			 *	i could use that but... idk... maybe?...
+			 *
+			 */
+			UE_LOG(LogTemp, Error, TEXT("%s"), *it.Key.GetFName().ToString());
 		}
 	}
-}
-
-FInputKey AFightingGameState::ParseKey(FString SubStr)
-{
-	// DefaultInput.ini
-
-	// Key = Gamepad_DPad_Up
-	// Key = Gamepad_DPad_Down
-	// Key = Gamepad_DPad_Right
-	// Key = Gamepad_DPad_Left
-	// Key = Gamepad_FaceButton_Bottom
-	// Key = Gamepad_FaceButton_Right
-	// Key = Gamepad_FaceButton_Left
-	// Key = Gamepad_FaceButton_Top
-	// Key = Gamepad_LeftShoulder
-	// Key = Gamepad_LeftTrigger
-	// Key = Gamepad_RightShoulder
-	// Key = Gamepad_RightTrigger
-
-	FInputKey Result;
-
-	FString ControllerFName = TEXT("");
-	FString ControllerActionType = TEXT("");
-	FString ControllerActionValue = TEXT("");
-
-	int SIndex = 0;
-	while (SubStr.FindChar('_', SIndex))
+	else
 	{
-		const FString ParseResult = SubStr.Left(SIndex);
-		if (ControllerFName.IsEmpty()) ControllerFName = ParseResult;
-		else if (ControllerActionType.IsEmpty()) ControllerActionType = ParseResult;
-		SubStr.RemoveFromStart(ParseResult + TEXT("_"));
+		UE_LOG(LogTemp, Error, TEXT("InputMappingContext FAILED TO LOAD FROM REGISTRY"));
 	}
-	/*
-	 *	Don't really like this, what if we had more complex Input String. Example: Vive_Right_Trigger_Axis
-	 *	Input Parsing should always be: {ControllerType}, {ControllerActionType}, {ControllerActionValue}
-	 *
-	 *	Maybe I should parse searching for Cap letters? To think on...
-	 */
-	if (ControllerActionType.IsEmpty()) ControllerActionType = SubStr;
-	else ControllerActionType = SubStr;
-	/*
-	 *	Incomplete Require FInput assignment for each Key Entry, basically we need to parse the above string and retrieve it's ControllerActionType to
-	 *	determine if it's a directional input or a face button
-	 *	
-	 *	then, assign the ControllerActionValue
-	 *
-	 */
-	return Result;
 }

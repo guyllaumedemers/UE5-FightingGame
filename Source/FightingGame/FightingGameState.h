@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "InputActionTableRow.h"
+#include "InputMappingContext.h"
 #include "GameFramework/GameState.h"
 #include "FightingGameState.generated.h"
+
+class UInputMappingContext;
 
 UCLASS()
 class FIGHTINGGAME_API AFightingGameState : public AGameState
@@ -21,20 +25,22 @@ protected:
 public:
 
 	// Keep Reference to the Mapping of UE5 Inputs and Custom Create Ones
-	FORCEINLINE const TMap<FString, FInputKey>& GetUEInputToCustomKeyMap() const	{ return UEInputToCustomKeyMap; }
+	FORCEINLINE TSoftObjectPtr<UInputMappingContext> GetDefaultInputMappingContext() const	{ return DefaultInputMappingContext; }
+	FORCEINLINE FInputKey GetFInputKey(const UInputAction* Value) const						{ return GetInputActionKeyValue(Value); }
 
 	// Tracking the GameState, is the cinematic complete
-	FORCEINLINE bool GetCanPlayersMove() const										{ return CanPlayersMove; }
-	FORCEINLINE void SetCanPlayersMove(const bool& value)							{ CanPlayersMove = value; }
+	FORCEINLINE bool GetCanPlayersMove() const												{ return CanPlayersMove; }
+	FORCEINLINE void SetCanPlayersMove(const bool& Value)									{ CanPlayersMove = Value; }
 
 private:
 
+	FORCEINLINE bool IsInputActionFound(const UInputAction* InputAction) const				{ return CustomDefaultInputMappingContext.Find(InputAction) != nullptr; }
+	FORCEINLINE FInputKey GetInputActionKeyValue(const UInputAction* InputAction) const		{ return IsInputActionFound(InputAction) ? CustomDefaultInputMappingContext[InputAction] : FInputKey(); }
+
 	bool CanPlayersMove = false;
 
-	// Store KeyValuePair for Fkey - FInputKey
-	TMap<FString, FInputKey> UEInputToCustomKeyMap;
+	// IMC use for IA Retrieval, while TMap use for KeyValuePair assignment. TO BE USE with Custom Bitmask flag system
+	TSoftObjectPtr<UInputMappingContext> DefaultInputMappingContext;
+	TMap<UInputAction*, FInputKey> CustomDefaultInputMappingContext;
 
-	void RegisterInputs();
-
-	FInputKey ParseKey(FString);
 };

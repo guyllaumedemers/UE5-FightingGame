@@ -12,7 +12,7 @@ UInputBufferComponent::UInputBufferComponent(const FObjectInitializer& ObjectIni
 	PrimaryComponentTick.bStartWithTickEnabled = true;
 }
 
-void UInputBufferComponent::CaptureInput(FKey FKey)
+void UInputBufferComponent::CaptureInput(const FInputActionInstance& FInputActionInstance)
 {
 	const AFightingGameState* FightingGameState = Cast<AFightingGameState>(GetWorld()->GetGameState());
 	if (FightingGameState && FightingGameState->GetCanPlayersMove())
@@ -20,7 +20,7 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 		const AFightingCharacterBase* FightingCharacterBase = Cast<AFightingCharacterBase>(GetOwner());
 		if (FightingCharacterBase && !FightingCharacterBase->GetIsPlayerCancelled())
 		{
-			const FInputKey CapturedKey = GetFInputKey(FKey);
+			const FInputKey CapturedKey = GetFInputKey(FInputActionInstance);
 			if (IsValidKey(CapturedKey))
 			{
 				if (IsLastCaptureTimeGreaterThanMaxThreshold(CapturedKey)) ResetInputString();
@@ -30,14 +30,8 @@ void UInputBufferComponent::CaptureInput(FKey FKey)
 	}
 }
 
-FInputKey UInputBufferComponent::GetFInputKey(const FKey& FKey)
+FInputKey UInputBufferComponent::GetFInputKey(const FInputActionInstance& FInputActionInstance) const
 {
-	const AFightingGameState* FightingGameState = Cast<AFightingGameState>(GetWorld()->GetGameState());
-	if(FightingGameState)
-	{
-		const FString KeyPressed = FKey.GetFName().ToString();
-		const TMap<FString, FInputKey> UEInputToCustomKeyMap = FightingGameState->GetUEInputToCustomKeyMap();
-		if (UEInputToCustomKeyMap.Find(KeyPressed)) return UEInputToCustomKeyMap[KeyPressed];
-	}
+	if(const AFightingGameState* FightingGameState = Cast<AFightingGameState>(GetWorld()->GetGameState())) return FightingGameState->GetFInputKey(FInputActionInstance.GetSourceAction());
 	return FInputKey();
 }

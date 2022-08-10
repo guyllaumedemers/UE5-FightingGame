@@ -4,7 +4,6 @@
 #include "InputBufferComponent.h"
 #include "FightingCharacterBase.h"
 #include "FightingGameState.h"
-#include "GameFramework/InputSettings.h"
 
 UInputBufferComponent::UInputBufferComponent(const FObjectInitializer& ObjectInitializer)
 {

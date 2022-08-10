@@ -30,7 +30,7 @@ public:
 
 	FORCEINLINE TObjectPtr<UInputBufferComponent> GetPlayerInputBufferComponent() const	{ return PlayerInputBufferComponent; }
 	FORCEINLINE bool GetIsPlayerCancelled() const										{ return IsPlayerCancelled; }
-	FORCEINLINE void SetIsPlayerCancelled(const bool& value)							{ IsPlayerCancelled = value; if (value) OnCharacterCancelledDelEvent.ExecuteIfBound(CancellationTime); }
+	FORCEINLINE void SetIsPlayerCancelled(const bool& Value)							{ IsPlayerCancelled = Value; if (Value) OnCharacterCancelledDelEvent.ExecuteIfBound(CancellationTime); }
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = InputTable, meta=(AllowedClasses="FInputActionTableRow"));
 	TObjectPtr<UDataTable> SharedInputDataTable;

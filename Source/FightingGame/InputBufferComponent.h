@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "InputAction.h"
 #include "InputActionTableRow.h"
-#include "InputCoreTypes.h"
 #include "Components/ActorComponent.h"
 #include "InputBufferComponent.generated.h"
 
@@ -22,6 +21,14 @@ public:
 
 	// Func Referenced by PlayerController for input Callbacks
 	void CaptureInput(const FInputActionInstance&);
+
+	FORCEINLINE void BroadcastInputCapture(const FInputKey& FInputKey) const	{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); }
+	FORCEINLINE void BroadcastInputStringComplete() const						{ OnInputStringCompleteDelEvent.ExecuteIfBound(); }
+
+	/*
+	 *	Research how to Run the Del Binding while keeping things encapsulated inside the Component?
+	 *
+	 */
 
 private:
 
@@ -43,7 +50,7 @@ private:
 
 	double TimeElapse = 0.f;
 
-	FORCEINLINE bool IsElapseTimeGreater(const double& value) const								{ return TimeElapse >= value; };
+	FORCEINLINE bool IsElapseTimeGreater(const double& Value) const								{ return TimeElapse >= Value; };
 	FORCEINLINE bool IsLastCaptureTimeGreaterThanMaxThreshold(const FInputKey& FInputKey) const	{ return IsElapseTimeGreater(FInputKey.MaxResetThreshold); };
 	FORCEINLINE void ResetInputString()															{ TimeElapse = 0.f; OnInputStringCompleteDelEvent.ExecuteIfBound(); }
 };

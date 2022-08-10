@@ -38,6 +38,10 @@
 		{
 			"Name": "MyNewPluggin",
 			"Enabled": false
+		},
+		{
+			"Name": "CommonUI",
+			"Enabled": true
 		}
 	]
 }

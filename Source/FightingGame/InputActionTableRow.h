@@ -3,9 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "Engine/DataTable.h"
 #include "UObject/NoExportTypes.h"
 #include "InputActionTableRow.generated.h"
+
+struct FEnumTool
+{
+	template <typename EnumType>
+	static FORCEINLINE EnumType GetEnumValueFromString(const FString& EnumName, const FString& String) {
+		UEnum* Enum = FindObject<UEnum>(ANY_PACKAGE, *EnumName, true);
+		if (!Enum) {
+			return EnumType(0);
+		}
+		return (EnumType)Enum->GetIndexByName(FName(*String));
+	}
+};
 
 /*
  *	Enum make sense here as there will never be more values than the ones declared below.
@@ -35,13 +48,17 @@ enum class EDirectionalHandle : uint8
 };
 ENUM_CLASS_FLAGS(EDirectionalHandle);
 
+class UInputAction;
+
 USTRUCT(BlueprintType)
 struct FInputKey
 {
-
 	GENERATED_BODY();
 
 	FInputKey() : KeyHandle(EKeyHandle::None), DirectionalHandle(EDirectionalHandle::None), MinResetThreshold(0.f), MaxResetThreshold(0.f)
+	{}
+
+	FInputKey(const EKeyHandle& KeyHandle, const EDirectionalHandle& DirectionalHandle) : KeyHandle(KeyHandle), DirectionalHandle(DirectionalHandle)
 	{}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = EKeyHandle, ShortTooltip = "Bitmask for 1,2,3,4 Combination"));
@@ -55,12 +72,17 @@ struct FInputKey
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ShortTooltip = "Max Frame Execution Possible"));
 	float MaxResetThreshold;
+
+	FORCEINLINE static FInputKey Create(const UInputAction* InputAction) { return GetFInputKeyFromAction(InputAction); };
+
+private:
+
+	static FInputKey GetFInputKeyFromAction(const UInputAction*);
 };
 
 USTRUCT(BlueprintType)
 struct FInputString
 {
-
 	GENERATED_BODY();
 
 	FInputString() : Sequence(TArray<FInputKey>())

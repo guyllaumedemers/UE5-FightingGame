@@ -42,7 +42,7 @@ private:
 
 	TArray<FInputKey> InputStack;
 
-	FORCEINLINE bool IsValidKey(const FInputKey& FInputKey) const	{ return FInputKey.KeyHandle == EKeyHandle::None; }
+	FORCEINLINE bool IsValidKey(const FInputKey& FInputKey) const	{ return FInputKey.KeyHandle != EKeyHandle::None || FInputKey.DirectionalHandle != EDirectionalHandle::None; }
 	FORCEINLINE void AddKey(const FInputKey& FInputKey)				{ OnInputCaptureDelEvent.ExecuteIfBound(FInputKey); InputStack.Add(FInputKey); };
 	FORCEINLINE void PopKey()										{ InputStack.Pop(); };
 	FInputKey GetFInputKey(const FInputActionInstance&) const;

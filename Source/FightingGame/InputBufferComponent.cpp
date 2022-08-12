@@ -20,10 +20,11 @@ void UInputBufferComponent::CaptureInput(const FInputActionInstance& FInputActio
 		if (FightingCharacterBase && !FightingCharacterBase->GetIsPlayerCancelled())
 		{
 			const FInputKey CapturedKey = GetFInputKey(FInputActionInstance);
-			FString Msg = FInputActionInstance.GetSourceAction()->GetFName().ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, *Msg);
 			if (IsValidKey(CapturedKey))
 			{
+				FString Msg = FInputActionInstance.GetSourceAction()->GetFName().ToString();
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, *Msg);
+
 				if (IsLastCaptureTimeGreaterThanMaxThreshold(CapturedKey)) ResetInputString();
 				else AddKey(CapturedKey);
 			}

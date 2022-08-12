@@ -45,8 +45,8 @@ protected:
 public:
 
 	// Keep Reference to the Mapping of UE5 Inputs and Custom Create Ones
-	FORCEINLINE TSoftObjectPtr<UInputMappingContext> GetDefaultInputMappingContext() const	{ return DefaultInputMappingContext; }
-	FORCEINLINE FInputKey GetFInputKey(const UInputAction* Value) const						{ return GetInputActionKeyValue(Value); }
+	FORCEINLINE TSoftObjectPtr<UInputMappingContext> GetDefaultInputMappingContext() const			{ return DefaultInputMappingContext; }
+	FORCEINLINE FInputKey GetFInputKey(const UInputAction* InputAction) const						{ return GetInputActionKeyValue(InputAction); }
 
 	// Tracking the GameState, is the cinematic complete
 	FORCEINLINE bool GetCanPlayersMove() const												{ return CanPlayersMove; }

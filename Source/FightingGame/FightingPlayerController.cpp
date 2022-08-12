@@ -61,8 +61,7 @@ void AFightingPlayerController::BindPlayerControllerInputs(APawn* OldPawnControl
 		if (PlayerEnhancedInputComponent && InputBufferComponent)
 		{
 			PlayerEnhancedInputComponent->ClearActionBindings();
-			TArray<FEnhancedActionKeyMapping> KeyMapping = FightingGameState->GetDefaultInputMappingContext()->GetMappings();
-			for (const auto& it : KeyMapping)
+			for (const auto& it : FightingGameState->GetDefaultInputMappingContext()->GetMappings())
 			{
 				PlayerEnhancedInputComponent->BindAction(it.Action, ETriggerEvent::Triggered, InputBufferComponent, &UInputBufferComponent::CaptureInput);
 			}

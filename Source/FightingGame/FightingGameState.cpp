@@ -21,23 +21,16 @@ void AFightingGameState::BeginPlay()
 	Super::BeginPlay();
 
 	// Parsing Input Mapping Context, Retrieve all IA and Map to usable Data Collection
-	if(DefaultInputMappingContext)
+	if (DefaultInputMappingContext)
 	{
-		for(const auto& it : DefaultInputMappingContext->GetMappings())
+		for (const auto& it : DefaultInputMappingContext->GetMappings())
 		{
-			FString ActionName = it.Action->GetFName().ToString();
-			int SIndex = 0;
-			while (ActionName.FindChar('_', SIndex))
-			{
-				const FString SubStr = ActionName.Left(SIndex);
-				ActionName.RemoveFromStart(SubStr + TEXT("_"));
-			}
-			/*
-			 *	TO COMPLETE, Create TMap Values Entry by Parsing IA FName since IA can only Retrieve Engine Built Value, bool - float - vector
-			 *	i could use that but... idk... maybe?...
-			 *
-			 */
-			UE_LOG(LogTemp, Error, TEXT("%s"), *it.Key.GetFName().ToString());
+			CustomDefaultInputMappingContext.Add(it.Action, FInputKey::Create(it.Action));
+		}
+
+		for (const auto& it : CustomDefaultInputMappingContext)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("%s %s %s"), *it.Key->GetFName().ToString(), *UEnum::GetDisplayValueAsText(it.Value.KeyHandle).ToString(), *UEnum::GetDisplayValueAsText(it.Value.DirectionalHandle).ToString());
 		}
 	}
 	else

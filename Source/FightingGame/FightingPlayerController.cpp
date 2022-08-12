@@ -6,7 +6,9 @@
 #include "FightingGameState.h"
 #include "InputBufferComponent.h"
 #include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
+#include "Engine/LocalPlayer.h"
 
 AFightingPlayerController::AFightingPlayerController(const FObjectInitializer& FObjectInitializer)
 {
@@ -47,16 +49,22 @@ void AFightingPlayerController::BindPlayerControllerInputs(APawn* OldPawnControl
 
 	if (FightingCharacterBase && FightingGameState)
 	{
-		const UInputBufferComponent* InputBufferComponent = FightingCharacterBase->GetPlayerInputBufferComponent();
 		UEnhancedInputComponent* PlayerEnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
+		UInputBufferComponent* InputBufferComponent = FightingCharacterBase->GetPlayerInputBufferComponent();
 
-		if (InputBufferComponent && PlayerEnhancedInputComponent)
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 		{
-			for (const auto& it : FightingGameState->GetDefaultInputMappingContext()->GetMappings())
-			{
-				// Issue with delegate binding, require fix
+			Subsystem->ClearAllMappings();
+			Subsystem->AddMappingContext(FightingGameState->GetDefaultInputMappingContext().Get(), 0);
+		}
 
-				//PlayerEnhancedInputComponent->BindAction(it.Action, ETriggerEvent::Triggered, InputBufferComponent, &UInputBufferComponent::CaptureInput);
+		if (PlayerEnhancedInputComponent && InputBufferComponent)
+		{
+			PlayerEnhancedInputComponent->ClearActionBindings();
+			TArray<FEnhancedActionKeyMapping> KeyMapping = FightingGameState->GetDefaultInputMappingContext()->GetMappings();
+			for (const auto& it : KeyMapping)
+			{
+				PlayerEnhancedInputComponent->BindAction(it.Action, ETriggerEvent::Triggered, InputBufferComponent, &UInputBufferComponent::CaptureInput);
 			}
 		}
 	}

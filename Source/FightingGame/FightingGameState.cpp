@@ -12,7 +12,7 @@ AFightingGameState::AFightingGameState(const FObjectInitializer& FObjectInitiali
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	CanPlayersMove = true;
 
-	const auto AssetFound = ConstructorHelpers::FObjectFinder<UInputMappingContext>(TEXT("/Game/ProjectContent/Tables/IMC_InputRecord.IMC_InputRecord"));
+	const auto AssetFound = ConstructorHelpers::FObjectFinder<UInputMappingContext>(TEXT("/Game/ProjectContent/Inputs/Gameplay/IMC_InputRecord.IMC_InputRecord"));
 	if (AssetFound.Succeeded()) DefaultInputMappingContext = AssetFound.Object;
 }
 

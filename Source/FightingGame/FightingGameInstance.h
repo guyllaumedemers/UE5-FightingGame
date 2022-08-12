@@ -18,11 +18,11 @@ protected:
 
 public:
 
-	FORCEINLINE void Save() const				{ SaveGameBase->Save(); }
-	FORCEINLINE void Load()						{ InitializeGameFromSave(SaveGameBase->Load()); }
+	FORCEINLINE void Save() const				{ if(SaveGameBase) SaveGameBase->Save(); }
+	FORCEINLINE void Load()						{ if(SaveGameBase) InitializeGameFromSave(SaveGameBase->Load()); }
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool HasSave() const			{ return SaveGameBase->HasSaveFile(); }
+	FORCEINLINE bool HasSave() const			{ return SaveGameBase && SaveGameBase->HasSaveFile(); }
 
 private:
 

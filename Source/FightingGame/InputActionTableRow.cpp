@@ -11,12 +11,7 @@
 FInputKey FInputKey::GetFInputKeyFromAction(const UInputAction* InputAction)
 {
 	FString InputActionValue = InputAction->GetFName().ToString();
-	enum class EActionType
-	{
-		None = 0,
-		Action,
-		Direction
-	} InputActionType = EActionType::None;
+	EActionType InputActionType = EActionType::None;
 
 	int SIndex = 0;
 	while (InputActionValue.FindChar('_', SIndex))
@@ -25,9 +20,7 @@ FInputKey FInputKey::GetFInputKeyFromAction(const UInputAction* InputAction)
 		// TODO Always Return ActionType::None, fix it
 		//		odd...		
 		//
-		UE_LOG(LogTemp, Error, TEXT("%s"), *SubStr);
 		InputActionType = FEnumTool::GetEnumValueFromString<EActionType>("EActionType", SubStr);
-		UE_LOG(LogTemp, Error, TEXT("%s"), *FEnumTool::GetEnumValueAsString<EActionType>("EActionType", InputActionType));
 		InputActionValue.RemoveFromStart(SubStr + TEXT("_"));
 	}
 	return [&](const EActionType& ActionType, const FString& StringValue)

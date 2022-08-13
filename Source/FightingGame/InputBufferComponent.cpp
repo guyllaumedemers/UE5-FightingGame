@@ -22,9 +22,6 @@ void UInputBufferComponent::CaptureInput(const FInputActionInstance& FInputActio
 			const FInputKey CapturedKey = GetFInputKey(FInputActionInstance);
 			if (IsValidKey(CapturedKey))
 			{
-				FString Msg = FInputActionInstance.GetSourceAction()->GetFName().ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, *Msg);
-
 				if (IsLastCaptureTimeGreaterThanMaxThreshold(CapturedKey)) ResetInputString();
 				else AddKey(CapturedKey);
 			}

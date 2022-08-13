@@ -29,6 +29,15 @@ struct FEnumTool
 	}
 };
 
+// required for FindObject to be able to acess it in memory, which means it cannot be declared at method definition
+// level, which was also a bad physical design to do.
+UENUM()
+enum class EActionType : uint8 {
+	None = 0,
+	Action,
+	Direction
+};
+
 /*
  *	Enum make sense here as there will never be more values than the ones declared below.
  *	Possible combinations are covered using bitmask Flags which is more than enough for creating complex combo strings.

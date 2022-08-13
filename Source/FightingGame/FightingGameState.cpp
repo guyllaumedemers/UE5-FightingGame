@@ -27,11 +27,6 @@ void AFightingGameState::BeginPlay()
 		{
 			CustomDefaultInputMappingContext.Add(it.Action, FInputKey::Create(it.Action));
 		}
-
-		for (const auto& it : CustomDefaultInputMappingContext)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("%s %s %s"), *it.Key->GetFName().ToString(), *UEnum::GetDisplayValueAsText(it.Value.KeyHandle).ToString(), *UEnum::GetDisplayValueAsText(it.Value.DirectionalHandle).ToString());
-		}
 	}
 	else
 	{

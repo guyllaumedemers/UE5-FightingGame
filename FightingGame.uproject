@@ -10,7 +10,9 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"CoreUObject"
+				"CoreUObject",
+				"EnhancedInput",
+				"ModularGameplay"
 			]
 		}
 	],
@@ -41,6 +43,26 @@
 		},
 		{
 			"Name": "CommonUI",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
+		},
+		{
+			"Name": "ModularGameplay",
+			"Enabled": true
+		},
+		{
+			"Name": "GameFeatures",
+			"Enabled": true
+		},
+		{
+			"Name": "FightingCore",
+			"Enabled": true
+		},
+		{
+			"Name": "FightingMaps",
 			"Enabled": true
 		}
 	]

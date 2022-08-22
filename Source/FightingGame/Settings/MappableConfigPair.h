@@ -36,8 +36,10 @@ struct FLoadedMappableInputConfig
 	UPROPERTY(EditAnywhere, Category = "Mappable Input")
 	const UPlayerMappableInputConfig* Config;
 
-	FLoadedMappableInputConfig() = default;
 	FLoadedMappableInputConfig(const UPlayerMappableInputConfig* InConfig)
 		: Config(InConfig)
+	{}
+
+	FLoadedMappableInputConfig()
 	{}
 };

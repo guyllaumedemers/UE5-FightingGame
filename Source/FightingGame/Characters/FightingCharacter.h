@@ -6,6 +6,8 @@
 #include "ModularCharacter.h"
 #include "FightingCharacter.generated.h"
 
+class UHealthComponent;
+
 UCLASS()
 class FIGHTINGGAME_API AFightingCharacter : public AModularCharacter
 {
@@ -19,4 +21,5 @@ protected:
 
 private:
 
+	TObjectPtr<UHealthComponent> HealthComponent;
 };

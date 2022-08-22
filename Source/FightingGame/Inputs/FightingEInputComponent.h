@@ -2,16 +2,18 @@
 
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
-#include "ModularEInputComponent.generated.h"
+#include "FightingEInputComponent.generated.h"
+
+class UPlayerMappableInputConfig;
 
 UCLASS()
-class FIGHTINGGAME_API UModularEInputComponent : public UEnhancedInputComponent
+class FIGHTINGGAME_API UFightingEInputComponent : public UEnhancedInputComponent
 {
 	GENERATED_BODY()
 
 protected:
 
-	UModularEInputComponent(const FObjectInitializer& FObjectInitializer = FObjectInitializer::Get());
+	UFightingEInputComponent(const FObjectInitializer& FObjectInitializer = FObjectInitializer::Get());
 	virtual void OnUnregister() override;
 	virtual void OnRegister() override;
 
@@ -23,4 +25,9 @@ private:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void ProcessInputActionValue(const FInputActionInstance& InputActionInstance);
+
+private:
+	// passing const pointer - cuz referencing a UDataAsset - instance in memory
+	void RegisterPlayerMappableInputConfig(const UPlayerMappableInputConfig*);
+	void UnRegisterPlayerMappableInputConfigs();
 };

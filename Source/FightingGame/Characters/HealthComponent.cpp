@@ -8,10 +8,6 @@ UHealthComponent::UHealthComponent(const FObjectInitializer& FObjectInitializer)
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("HealthComponent GameFeatures Added!"));
-	}
 }
 
 void UHealthComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)

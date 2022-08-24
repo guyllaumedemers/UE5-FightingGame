@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -26,6 +24,9 @@ struct FMappableInputConfig
 		: bClientComponent(true)
 		, bServerComponent(true)
 	{}
+
+	static void RegisterMappableInputConfig(const FMappableInputConfig& InMappableInputConfig);
+	static void UnRegisterMappableInputConfig(const FMappableInputConfig& InMappableInputConfig);
 };
 
 USTRUCT()

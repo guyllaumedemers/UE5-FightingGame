@@ -24,7 +24,7 @@ public:
 
 	// force to load the asset at each call?
 	template<typename AssetType>
-	FORCEINLINE static AssetType* GetAsset(TSoftObjectPtr<AssetType> AssetPointer, bool bKeepInMemory = true)
+	FORCEINLINE static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true)
 	{
 		AssetType* LoadedAsset = nullptr;
 
@@ -38,7 +38,7 @@ public:
 			}
 			if (LoadedAsset && bKeepInMemory)
 			{
-				Get().AddLoadedAsset(LoadedAsset);
+				Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
 			}
 		}
 		return LoadedAsset;

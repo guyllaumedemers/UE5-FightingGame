@@ -14,6 +14,7 @@ class FIGHTINGGAME_API UFightingEInputComponent : public UEnhancedInputComponent
 protected:
 
 	UFightingEInputComponent(const FObjectInitializer& FObjectInitializer = FObjectInitializer::Get());
+	virtual void BeginPlay() override;
 	virtual void OnUnregister() override;
 	virtual void OnRegister() override;
 
@@ -28,6 +29,6 @@ private:
 
 private:
 	// passing const pointer - cuz referencing a UDataAsset - instance in memory
-	void RegisterPlayerMappableInputConfig(const UPlayerMappableInputConfig*);
+	void RegisterPlayerMappableInputConfig();
 	void UnRegisterPlayerMappableInputConfigs();
 };

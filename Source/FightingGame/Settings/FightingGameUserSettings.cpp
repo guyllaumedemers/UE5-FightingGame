@@ -20,10 +20,6 @@ void UFightingGameUserSettings::RegisterPlayerMappableInputConfig(const UPlayerM
 			const auto NumAdded = InputConfigs.Add(FLoadedMappableInputConfig(NewEntry));
 			// lyra broadcast the registered entry but irreleveant for me now.
 		}
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, TEXT("Registering Enhanced Inputs with GameUserSettings"));
-		}
 	}
 }
 

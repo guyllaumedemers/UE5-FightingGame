@@ -6,8 +6,6 @@ void UGameFeatureAction_AddInputConfig::OnGameFeatureActivating(FGameFeatureActi
 	for (const auto& FMappableInputConfig
 		: Configs)
 	{
-		// FMappableInputConfig transient still make GameFeatureAction DependsOn UFightingGameUserSettings && UFightingAssetManager
-		// since GameFeatureAction - DependsOn -> FMappableInputConfig which - DependsOn -> UFightingGameUserSettings && UFightingAssetManager
 		FMappableInputConfig::RegisterMappableInputConfig(FMappableInputConfig);
 	}
 }

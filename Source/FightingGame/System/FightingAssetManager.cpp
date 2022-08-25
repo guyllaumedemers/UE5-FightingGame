@@ -1,11 +1,18 @@
 #include "FightingAssetManager.h"
 #include "Engine/Engine.h"
+#include "FightingGame/Inputs/GameplayTags.h"
+
+void UFightingAssetManager::StartInitialLoading()
+{
+	Super::StartInitialLoading();
+	FGameplayTags::Get().AddAllTags();
+}
 
 UFightingAssetManager& UFightingAssetManager::Get()
 {
-	if(GEngine)
+	if (GEngine)
 	{
-		if(UFightingAssetManager* Singleton = Cast<UFightingAssetManager>(GEngine->AssetManager))
+		if (UFightingAssetManager* Singleton = Cast<UFightingAssetManager>(GEngine->AssetManager))
 		{
 			return *Singleton;
 		}
@@ -17,9 +24,9 @@ UFightingAssetManager& UFightingAssetManager::Get()
 // arent part of an explicit flow defined by devs in production.
 UObject* UFightingAssetManager::SynchronousLoadAsset(const FSoftObjectPath& AssetPath)
 {
-	if(AssetPath.IsValid())
+	if (AssetPath.IsValid())
 	{
-		if(IsValid()) return GetStreamableManager().LoadSynchronous(AssetPath, false);
+		if (IsValid()) return GetStreamableManager().LoadSynchronous(AssetPath, false);
 		return AssetPath.TryLoad();
 	}
 	return nullptr;
@@ -27,7 +34,7 @@ UObject* UFightingAssetManager::SynchronousLoadAsset(const FSoftObjectPath& Asse
 
 void UFightingAssetManager::AddLoadedAsset(const UObject* Asset)
 {
-	if(Asset)
+	if (Asset)
 	{
 		FScopeLock LoaddedAssetLock(&LoadedAssetsCritical);
 		LoadedAssets.Add(Asset);

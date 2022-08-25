@@ -9,38 +9,43 @@ class FIGHTINGGAME_API UFightingAssetManager : public UAssetManager
 {
 	GENERATED_BODY()
 
-private:
+protected:
 
-	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
-	void AddLoadedAsset(const UObject* Asset);
-
-	TSet<const UObject*> LoadedAssets;
-
-	FCriticalSection LoadedAssetsCritical;
+	virtual void StartInitialLoading() override;
 
 public:
 
 	static UFightingAssetManager& Get();
 
-	// force to load the asset at each call?
 	template<typename AssetType>
-	FORCEINLINE static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true)
-	{
-		AssetType* LoadedAsset = nullptr;
+	static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true);
 
-		const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
-		if (AssetPath.IsValid())
-		{
-			LoadedAsset = AssetPointer.Get();
-			if (!LoadedAsset)
-			{
-				LoadedAsset = Cast<AssetType>(SynchronousLoadAsset(AssetPath));
-			}
-			if (LoadedAsset && bKeepInMemory)
-			{
-				Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
-			}
-		}
-		return LoadedAsset;
-	}
+private:
+
+	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
+	void AddLoadedAsset(const UObject* Asset);
+
+	FCriticalSection LoadedAssetsCritical;
+	TSet<const UObject*> LoadedAssets;
 };
+
+template <typename AssetType>
+AssetType* UFightingAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory)
+{
+	AssetType* LoadedAsset = nullptr;
+
+	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
+	if (AssetPath.IsValid())
+	{
+		LoadedAsset = AssetPointer.Get();
+		if (!LoadedAsset)
+		{
+			LoadedAsset = Cast<AssetType>(SynchronousLoadAsset(AssetPath));
+		}
+		if (LoadedAsset && bKeepInMemory)
+		{
+			Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
+		}
+	}
+	return LoadedAsset;
+}

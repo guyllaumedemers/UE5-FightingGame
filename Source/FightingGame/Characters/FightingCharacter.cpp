@@ -2,6 +2,9 @@
 #include "HealthComponent.h"
 #include "FightingGame/Settings/FightingGameUserSettings.h"
 #include "FightingGame/Inputs/FightingEnhancedInputComponent.h"
+#include <EnhancedInputSubsystems.h>
+#include "Engine/LocalPlayer.h"
+#include "GameFramework/PlayerController.h"
 
 AFightingCharacter::AFightingCharacter(const FObjectInitializer& FObjectInitializer)
 	: Super(FObjectInitializer)
@@ -34,21 +37,35 @@ void AFightingCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		check(GameUserSettings);
 
-		if (const UTaggedInputActionConfig* InputConfig = GameUserSettings->GetInputConfig())
+		ULocalPlayer* LocalPlayer = Cast<APlayerController>(GetController())->GetLocalPlayer();
+
+		check(LocalPlayer);
+
+		// like im getting the PMI here for Input binding to hardware inputs which can load multiple assets...
+		// some might not even be usefull at first... what if there is pickup interaction like smash bros? Press X could Jab Hit && Pickup Object?
+		// how would priority be handles?
+		if (UEnhancedInputLocalPlayerSubsystem* EnhancedInputLocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
 		{
-			// thats a very static approach...
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().D_One, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().D_Two, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().D_Three, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().D_Four, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().Fb_One, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().Fb_Two, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().Fb_Three, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().Fb_Four, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().S_L1, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().S_R1, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().T_L2, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
-			EnhancedInputComponent->BindInputAction(InputConfig, FGameplayTags::Get().T_R2, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+			for (const auto& PlayerMappableInputConfig : GameUserSettings->GetPlayerMappableInputConfigs())
+			{
+				EnhancedInputLocalPlayerSubsystem->AddPlayerMappableConfig(PlayerMappableInputConfig.Get());
+			}
 		}
+
+		const UTaggedInputActionConfig& InputConfig = GameUserSettings->GetInputConfig();
+
+		// thats a very static approach...
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().D_One, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().D_Two, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().D_Three, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().D_Four, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().Fb_One, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().Fb_Two, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().Fb_Three, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().Fb_Four, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().S_L1, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().S_R1, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().T_L2, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
+		EnhancedInputComponent->BindInputAction(&InputConfig, FGameplayTags::Get().T_R2, ETriggerEvent::Triggered, EnhancedInputComponent, &UFightingEnhancedInputComponent::CaptureInputActionValue);
 	}
 }

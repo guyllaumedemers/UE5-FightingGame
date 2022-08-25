@@ -4,8 +4,6 @@
 #include "GameFramework/Character.h"
 #include "ModularCharacter.generated.h"
 
-class UTaggedInputActionConfig;
-
 UCLASS(Abstract)
 class FIGHTINGGAME_API AModularCharacter : public ACharacter
 {

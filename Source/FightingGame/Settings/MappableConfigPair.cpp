@@ -10,7 +10,7 @@ void FMappableInputConfig::RegisterMappableInputConfig(const FMappableInputConfi
 		UFightingAssetManager& AssetManager = UFightingAssetManager::Get();
 		if(const UPlayerMappableInputConfig* LoadedConfig = AssetManager.GetAsset(InMappableInputConfig.Config))
 		{
-			//UserSettings->RegisterPlayerMappableInputConfig(LoadedConfig);
+			UserSettings->RegisterPlayerMappableInputConfig(LoadedConfig);
 		}
 	}
 }
@@ -22,7 +22,7 @@ void FMappableInputConfig::UnRegisterMappableInputConfig(const FMappableInputCon
 		UFightingAssetManager& AssetManager = UFightingAssetManager::Get();
 		if (const UPlayerMappableInputConfig* LoadedConfig = AssetManager.GetAsset(InMappableInputConfig.Config))
 		{
-			//UserSettings->UnRegisterPlayerMappableInputConfigs(LoadedConfig);
+			UserSettings->UnRegisterPlayerMappableInputConfigs(LoadedConfig);
 		}
 	}
 }

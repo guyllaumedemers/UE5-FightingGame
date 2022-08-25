@@ -8,7 +8,24 @@ UFightingGameUserSettings* UFightingGameUserSettings::Get()
 	return GEngine ? CastChecked<ThisClass>(GEngine->GetGameUserSettings()) : nullptr;
 }
 
-const UTaggedInputActionConfig* UFightingGameUserSettings::GetInputConfig() const
+const UTaggedInputActionConfig& UFightingGameUserSettings::GetInputConfig() const
 {
-	return TaggedInputActionConfig.Get();
+	return *TaggedInputActionConfig.Get();
+}
+
+const TArray<TSoftObjectPtr<UPlayerMappableInputConfig>>& UFightingGameUserSettings::GetPlayerMappableInputConfigs() const
+{
+	return PlayerMappableInputConfigs;
+}
+
+void UFightingGameUserSettings::RegisterPlayerMappableInputConfig(const UPlayerMappableInputConfig* LoadedConfig)
+{
+	check(LoadedConfig);
+	PlayerMappableInputConfigs.AddUnique(LoadedConfig);
+}
+
+void UFightingGameUserSettings::UnRegisterPlayerMappableInputConfigs(const UPlayerMappableInputConfig* LoadedConfig)
+{
+	check(LoadedConfig);
+	PlayerMappableInputConfigs.Remove(LoadedConfig);
 }

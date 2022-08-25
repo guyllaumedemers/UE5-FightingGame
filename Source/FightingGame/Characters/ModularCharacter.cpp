@@ -1,5 +1,4 @@
 #include "ModularCharacter.h"
-#include "FightingGame/Inputs/FightingEnhancedInputComponent.h"
 #include <Components/GameFrameworkComponentManager.h>
 
 void AModularCharacter::PreInitializeComponents()

@@ -39,7 +39,7 @@ struct FTaggedInputAction
 	GENERATED_BODY();
 
 	UPROPERTY(EditAnywhere)
-	UInputAction* InputAction;
+	const UInputAction* InputAction;
 
 	UPROPERTY(EditAnywhere)
 	FGameplayTag GameplayTag;

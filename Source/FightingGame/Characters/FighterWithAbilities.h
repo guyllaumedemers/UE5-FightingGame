@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -15,11 +13,13 @@ class FIGHTINGGAME_API AFighterWithAbilities : public AFighter, public IAbilityS
 	GENERATED_BODY()
 
 	TObjectPtr<UAbilitySystemComponent_FightingGame> AbilitySystemComponent;
-	// seem like redundant as it upcast to the base class than gets call with a Cast<> to its derived class in the method below
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+
+	AFighterWithAbilities(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 public:
 
 	UFUNCTION(BlueprintGetter)
-	const UAbilitySystemComponent_FightingGame* GetAbilitySystemComponentDerived() const;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 };

@@ -1,12 +1,12 @@
 #include "FighterWithAbilities.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
-UAbilitySystemComponent* AFighterWithAbilities::GetAbilitySystemComponent() const
+AFighterWithAbilities::AFighterWithAbilities(const FObjectInitializer& ObjectInitializer)
 {
-	return AbilitySystemComponent.Get();
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent_FightingGame>("Ability System Component");
 }
 
-const UAbilitySystemComponent_FightingGame* AFighterWithAbilities::GetAbilitySystemComponentDerived() const
+UAbilitySystemComponent* AFighterWithAbilities::GetAbilitySystemComponent() const
 {
-	return Cast<UAbilitySystemComponent_FightingGame>(GetAbilitySystemComponent());
+	return Cast<UAbilitySystemComponent_FightingGame>(AbilitySystemComponent.Get());
 }

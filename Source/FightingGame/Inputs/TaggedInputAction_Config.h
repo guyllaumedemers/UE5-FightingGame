@@ -2,21 +2,21 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
-#include "GameplayTags.h"
+#include "NativeGameplayTag_FightingGame.h"
 #include "Engine/DataAsset.h"
-#include "TaggedInputActionConfig.generated.h"
+#include "TaggedInputAction_Config.generated.h"
 
 class UInputAction;
 
 UCLASS()
-class UTaggedInputActionConfig : public UDataAsset
+class UTaggedInputAction_Config : public UDataAsset
 {
 	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly);
+	TArray<FTaggedInputAction_Pair> TaggedInputActions_Pair;
 
 public:
 
 	const UInputAction* FindInputActionByTaggedInput(const FGameplayTag& FGameplayTag) const;
-
-	UPROPERTY(EditAnywhere);
-	TArray<FTaggedInputAction> TaggedInputActions;
 };

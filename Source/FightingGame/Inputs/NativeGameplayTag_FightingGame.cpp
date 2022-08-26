@@ -1,9 +1,9 @@
-#include "GameplayTags.h"
+#include "NativeGameplayTag_FightingGame.h"
 #include "GameplayTagsManager.h"
 
-FGameplayTags FGameplayTags::Singleton = FGameplayTags();
+FNativeGameplayTag_FightingGame FNativeGameplayTag_FightingGame::Singleton = FNativeGameplayTag_FightingGame();
 
-void FGameplayTags::AddAllTags()
+void FNativeGameplayTag_FightingGame::AddAllTags()
 {
 	AddTag(D_One, FName("InputTag.D.One"), TEXT("Directional Down"));
 	AddTag(D_Two, FName("InputTag.D.Two"), TEXT("Directional Left"));
@@ -19,7 +19,7 @@ void FGameplayTags::AddAllTags()
 	AddTag(T_R2, FName("InputTag.Trigger.R2"), TEXT("Trigger R2"));
 }
 
-void FGameplayTags::AddTag(FGameplayTag& OutTag, FName TagName, FString TagComment)
+void FNativeGameplayTag_FightingGame::AddTag(FGameplayTag& OutTag, FName TagName, FString TagComment)
 {
 	OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(TagName, TagComment);
 }

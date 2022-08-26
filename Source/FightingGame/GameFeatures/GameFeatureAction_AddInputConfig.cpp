@@ -4,9 +4,9 @@ void UGameFeatureAction_AddInputConfig::OnGameFeatureActivating(FGameFeatureActi
 {
 	Super::OnGameFeatureRegistering();
 	for (const auto& FMappableInputConfig
-		: Configs)
+		: PlayerMappableInput_PluginConfigs)
 	{
-		FMappableInputConfig::RegisterMappableInputConfig(FMappableInputConfig);
+		FPlayerMappableInput_PluginConfig::RegisterMappableInputConfig(FMappableInputConfig);
 	}
 }
 
@@ -14,8 +14,8 @@ void UGameFeatureAction_AddInputConfig::OnGameFeatureDeactivating(FGameFeatureDe
 {
 	Super::OnGameFeatureUnregistering();
 	for (const auto& FMappableInputConfig
-		: Configs)
+		: PlayerMappableInput_PluginConfigs)
 	{
-		FMappableInputConfig::UnRegisterMappableInputConfig(FMappableInputConfig);
+		FPlayerMappableInput_PluginConfig::UnRegisterMappableInputConfig(FMappableInputConfig);
 	}
 }

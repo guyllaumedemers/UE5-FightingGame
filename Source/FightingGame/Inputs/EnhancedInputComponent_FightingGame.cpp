@@ -1,17 +1,17 @@
-#include "FightingEnhancedInputComponent.h"
+#include "EnhancedInputComponent_FightingGame.h"
 #include "Engine/Engine.h"
 
-UFightingEnhancedInputComponent::UFightingEnhancedInputComponent(const FObjectInitializer& FObjectInitializer)
+UEnhancedInputComponent_FightingGame::UEnhancedInputComponent_FightingGame(const FObjectInitializer& FObjectInitializer)
 	: Super(FObjectInitializer)
 {}
 
-void UFightingEnhancedInputComponent::BeginPlay()
+void UEnhancedInputComponent_FightingGame::BeginPlay()
 {
 	Super::BeginPlay();
 	SetIsReplicated(true);
 }
 
-void UFightingEnhancedInputComponent::CaptureInputActionValue_Implementation(const FInputActionInstance& InputActionInstance)
+void UEnhancedInputComponent_FightingGame::CaptureInputActionValue_Implementation(const FInputActionInstance& InputActionInstance)
 {
 	if (GEngine)
 	{
@@ -22,7 +22,7 @@ void UFightingEnhancedInputComponent::CaptureInputActionValue_Implementation(con
 	ProcessInputActionValue_Implementation(InputActionInstance);
 }
 
-void UFightingEnhancedInputComponent::ProcessInputActionValue_Implementation(const FInputActionInstance& InputActionInstance)
+void UEnhancedInputComponent_FightingGame::ProcessInputActionValue_Implementation(const FInputActionInstance& InputActionInstance)
 {
 	if (GEngine)
 	{

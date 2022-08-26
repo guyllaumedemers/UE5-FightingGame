@@ -2,11 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
-#include "GameplayTags.generated.h"
+#include "NativeGameplayTag_FightingGame.generated.h"
 
-struct FGameplayTags
+struct FNativeGameplayTag_FightingGame
 {
-	static FGameplayTags& Get() { return Singleton; }
+	static FNativeGameplayTag_FightingGame& Get() { return Singleton; }
 
 	void AddAllTags();
 
@@ -28,19 +28,24 @@ private:
 
 	void AddTag(FGameplayTag& OutTag, FName TagName, FString TagComment);
 
-	static FGameplayTags Singleton;
+	static FNativeGameplayTag_FightingGame Singleton;
 };
 
 class UInputAction;
 
 USTRUCT()
-struct FTaggedInputAction
+struct FTaggedInputAction_Pair
 {
 	GENERATED_BODY();
 
-	UPROPERTY(EditAnywhere)
+	const UInputAction* GetInputAction() const { return InputAction; }
+	FGameplayTag GetInputGameplayTag() const { return Input_GameplayTag; }
+
+private:
+
+	UPROPERTY(EditDefaultsOnly);
 	const UInputAction* InputAction;
 
-	UPROPERTY(EditAnywhere)
-	FGameplayTag GameplayTag;
+	UPROPERTY(EditDefaultsOnly);
+	FGameplayTag Input_GameplayTag;
 };

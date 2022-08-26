@@ -1,0 +1,2 @@
+#include "CharacterAsset.h"
+

@@ -3,20 +3,20 @@
 #include "CoreMinimal.h"
 #include "PlayerMappableInputConfig.h"
 #include "GameFramework/GameUserSettings.h"
-#include "FightingGameUserSettings.generated.h"
+#include "GameUserSettings_FightingGame.generated.h"
 
-class UTaggedInputActionConfig;
+class UTaggedInputAction_Config;
 class UPlayerMappableInputConfig;
 
 UCLASS()
-class FIGHTINGGAME_API UFightingGameUserSettings : public UGameUserSettings
+class FIGHTINGGAME_API UGameUserSettings_FightingGame : public UGameUserSettings
 {
 	GENERATED_BODY()
 
 public:
 
-	static UFightingGameUserSettings* Get();
-	const UTaggedInputActionConfig& GetInputConfig() const;
+	static UGameUserSettings_FightingGame* Get();
+	const UTaggedInputAction_Config& GetInputConfig() const;
 	const TArray<TSoftObjectPtr<UPlayerMappableInputConfig>>& GetPlayerMappableInputConfigs() const;
 
 	// handles caching of PMI - IMC for hardware input mapping
@@ -25,6 +25,6 @@ public:
 
 private:
 
-	TSoftObjectPtr<UTaggedInputActionConfig> TaggedInputActionConfig;
+	TSoftObjectPtr<UTaggedInputAction_Config> TaggedInputActionConfig;
 	TArray<TSoftObjectPtr<UPlayerMappableInputConfig>> PlayerMappableInputConfigs;
 };

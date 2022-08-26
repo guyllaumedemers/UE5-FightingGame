@@ -2,12 +2,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "MappableConfigPair.generated.h"
+#include "PlayerMappableInput_ConfigPair.generated.h"
 
 class UPlayerMappableInputConfig;
 
 USTRUCT()
-struct FMappableInputConfig
+struct FPlayerMappableInput_PluginConfig
 {
 	GENERATED_BODY();
 
@@ -20,27 +20,27 @@ struct FMappableInputConfig
 	UPROPERTY(EditAnywhere, Category = "Mappable Input")	// useless for now, we do not handle replication so far
 	uint8 bServerComponent : 1;
 
-	FMappableInputConfig()
+	FPlayerMappableInput_PluginConfig()
 		: bClientComponent(true)
 		, bServerComponent(true)
 	{}
 
-	static void RegisterMappableInputConfig(const FMappableInputConfig& InMappableInputConfig);
-	static void UnRegisterMappableInputConfig(const FMappableInputConfig& InMappableInputConfig);
+	static void RegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
+	static void UnRegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
 };
 
 USTRUCT()
-struct FLoadedMappableInputConfig
+struct FPlayerMappableInput_GameLoadedConfig
 {
 	GENERATED_BODY();
 
 	UPROPERTY(EditAnywhere, Category = "Mappable Input")
 	const UPlayerMappableInputConfig* Config;
 
-	FLoadedMappableInputConfig(const UPlayerMappableInputConfig* InConfig)
+	FPlayerMappableInput_GameLoadedConfig(const UPlayerMappableInputConfig* InConfig)
 		: Config(InConfig)
 	{}
 
-	FLoadedMappableInputConfig()
+	FPlayerMappableInput_GameLoadedConfig()
 	{}
 };

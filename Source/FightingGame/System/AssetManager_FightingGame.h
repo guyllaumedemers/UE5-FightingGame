@@ -2,10 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "Engine/AssetManager.h"
-#include "FightingAssetManager.generated.h"
+#include "AssetManager_FightingGame.generated.h"
 
 UCLASS()
-class FIGHTINGGAME_API UFightingAssetManager : public UAssetManager
+class FIGHTINGGAME_API UAssetManager_FightingGame : public UAssetManager
 {
 	GENERATED_BODY()
 
@@ -15,7 +15,7 @@ protected:
 
 public:
 
-	static UFightingAssetManager& Get();
+	static UAssetManager_FightingGame& Get();
 
 	template<typename AssetType>
 	static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true);
@@ -25,12 +25,12 @@ private:
 	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
 	void AddLoadedAsset(const UObject* Asset);
 
-	FCriticalSection LoadedAssetsCritical;
+	FCriticalSection LoadedAsset_CriticalSelectionHandle;
 	TSet<const UObject*> LoadedAssets;
 };
 
 template <typename AssetType>
-AssetType* UFightingAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory)
+AssetType* UAssetManager_FightingGame::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory)
 {
 	AssetType* LoadedAsset = nullptr;
 

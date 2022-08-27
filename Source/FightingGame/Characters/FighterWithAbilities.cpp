@@ -1,5 +1,5 @@
 #include "FighterWithAbilities.h"
-#include "FightingGame/Abilities/AbilitySet_Fighter.h"
+#include "FightingGame/Abilities/AttributeSet_Fighter.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
 AFighterWithAbilities::AFighterWithAbilities(const FObjectInitializer& ObjectInitializer)
@@ -12,7 +12,7 @@ AFighterWithAbilities::AFighterWithAbilities(const FObjectInitializer& ObjectIni
 
 	check(ASC);
 
-	ASC->SetupAbilitySystemComponent_Init<UAbilitySet_Fighter>();
+	ASC->SetupAbilitySystemComponent_Init<UAttributeSet_Fighter>();
 }
 
 UAbilitySystemComponent* AFighterWithAbilities::GetAbilitySystemComponent() const

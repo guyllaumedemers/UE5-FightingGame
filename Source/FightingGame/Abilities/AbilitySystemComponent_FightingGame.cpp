@@ -1,5 +1,5 @@
 #include "AbilitySystemComponent_FightingGame.h"
-#include "FightingGame/Abilities/AbilitySet_Fighter.h"
+#include "FightingGame/Abilities/AttributeSet_Fighter.h"
 
 void UAbilitySystemComponent_FightingGame::RegisterAbilitySystemComponent_NewAbility(UGameplayAbility* NewAbility)
 {

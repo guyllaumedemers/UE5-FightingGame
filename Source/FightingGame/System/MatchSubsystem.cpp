@@ -1,5 +1,5 @@
 #include "MatchSubsystem.h"
-#include "FightingGame/Abilities/AbilitySet_World.h"
+#include "FightingGame/Abilities/AttributeSet_World.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
 UMatchSubsystem::UMatchSubsystem(const FObjectInitializer& ObjectInitializer)
@@ -12,7 +12,7 @@ UMatchSubsystem::UMatchSubsystem(const FObjectInitializer& ObjectInitializer)
 
 	check(ASC);
 
-	ASC->SetupAbilitySystemComponent_Init<UAbilitySet_World>();
+	ASC->SetupAbilitySystemComponent_Init<UAttributeSet_World>();
 }
 
 void UMatchSubsystem::Initialize(FSubsystemCollectionBase& Collection)

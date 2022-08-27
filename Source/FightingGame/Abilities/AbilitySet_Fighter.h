@@ -8,5 +8,6 @@ UCLASS()
 class FIGHTINGGAME_API UAbilitySet_Fighter : public UGameplayAbilitySet
 {
 	GENERATED_BODY()
-	
+
+	// holds data for fighters
 };

@@ -3,7 +3,6 @@
 
 UAbilitySystemComponent_FightingGame::UAbilitySystemComponent_FightingGame(const FObjectInitializer& ObjectInitializer)
 {
-	AbilitySet = GetSet<UAbilitySet_Fighter>();
 }
 
 void UAbilitySystemComponent_FightingGame::RegisterAbilitySystemComponent_NewAbility(UGameplayAbility* NewAbility)

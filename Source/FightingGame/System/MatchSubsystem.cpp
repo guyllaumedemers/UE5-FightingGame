@@ -1,8 +1,8 @@
-#include "FighterWithAbilities.h"
-#include "FightingGame/Abilities/AbilitySet_Fighter.h"
+#include "MatchSubsystem.h"
+#include "FightingGame/Abilities/AbilitySet_World.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
-AFighterWithAbilities::AFighterWithAbilities(const FObjectInitializer& ObjectInitializer)
+UMatchSubsystem::UMatchSubsystem(const FObjectInitializer& ObjectInitializer)
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent_FightingGame>("Ability System Component");
 
@@ -12,10 +12,10 @@ AFighterWithAbilities::AFighterWithAbilities(const FObjectInitializer& ObjectIni
 
 	check(ASC);
 
-	ASC->SetupAbilitySystemComponent_Init<UAbilitySet_Fighter>();
+	ASC->SetupAbilitySystemComponent_Init<UAbilitySet_World>();
 }
 
-UAbilitySystemComponent* AFighterWithAbilities::GetAbilitySystemComponent() const
+UAbilitySystemComponent* UMatchSubsystem::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent.Get();
 }

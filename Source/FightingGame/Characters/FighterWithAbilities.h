@@ -12,7 +12,7 @@ class FIGHTINGGAME_API AFighterWithAbilities : public AFighter, public IAbilityS
 {
 	GENERATED_BODY()
 
-	TObjectPtr<UAbilitySystemComponent_FightingGame> AbilitySystemComponent;
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 protected:
 

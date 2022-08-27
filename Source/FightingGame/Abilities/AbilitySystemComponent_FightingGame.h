@@ -4,8 +4,6 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemComponent_FightingGame.generated.h"
 
-class UAbilitySet_Fighter;
-
 UCLASS()
 class FIGHTINGGAME_API UAbilitySystemComponent_FightingGame : public UAbilitySystemComponent
 {
@@ -14,9 +12,20 @@ class FIGHTINGGAME_API UAbilitySystemComponent_FightingGame : public UAbilitySys
 	TArray<FGameplayAbilitySpecHandle> AbilitySpecHandles;
 	void RegisterAbilitySystemComponent_NewAbility(UGameplayAbility* NewAbility);
 
-	TSoftObjectPtr<UAbilitySet_Fighter> AbilitySet;
+	TSoftObjectPtr<UGameplayAbilitySet> AbilitySet;
 
 protected:
 
 	UAbilitySystemComponent_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+public:
+
+	template<typename UserClass>
+	void SetupAbilitySystemComponent_Init();
 };
+
+template <typename UserClass>
+void UAbilitySystemComponent_FightingGame::SetupAbilitySystemComponent_Init()
+{
+	AbilitySet = GetSet<UserClass>();
+}

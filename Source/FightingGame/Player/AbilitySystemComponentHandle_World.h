@@ -3,10 +3,10 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Actor.h"
-#include "Actor_TimerHandler.generated.h"
+#include "AbilitySystemComponentHandle_World.generated.h"
 
 UCLASS()
-class FIGHTINGGAME_API AActor_TimerHandler : public AActor, public IAbilitySystemInterface
+class FIGHTINGGAME_API AAbilitySystemComponentHandle_World : public AActor, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -15,7 +15,7 @@ class FIGHTINGGAME_API AActor_TimerHandler : public AActor, public IAbilitySyste
 
 protected:
 
-	AActor_TimerHandler(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	AAbilitySystemComponentHandle_World(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 

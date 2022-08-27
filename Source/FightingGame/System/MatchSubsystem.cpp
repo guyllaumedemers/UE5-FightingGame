@@ -1,5 +1,5 @@
 #include "MatchSubsystem.h"
-#include "FightingGame/Player/Actor_TimerHandler.h"
+#include "FightingGame/Player/AbilitySystemComponentHandle_World.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
 void UMatchSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -15,5 +15,5 @@ void UMatchSubsystem::Deinitialize()
 void UMatchSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 {
 	Super::OnWorldBeginPlay(InWorld);
-	TimerHandler = CreateDefaultSubobject<AActor_TimerHandler>("Timer Handler");
+	TimerHandler = CreateDefaultSubobject<AAbilitySystemComponentHandle_World>("Timer Handler");
 }

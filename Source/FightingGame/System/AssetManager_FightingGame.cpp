@@ -20,6 +20,15 @@ UAssetManager_FightingGame& UAssetManager_FightingGame::Get()
 	return *NewObject<UAssetManager_FightingGame>();
 }
 
+void UAssetManager_FightingGame::AddLoadedAsset(const UObject* Asset)
+{
+	if (Asset)
+	{
+		FScopeLock LoaddedAssetLock(&LoadedAsset_CriticalSelectionHandle);
+		LoadedAssets.Add(Asset);
+	}
+}
+
 // this callback makes me realize how little control we have over the execution order in unreal. System engine classes
 // arent part of an explicit flow defined by devs in production.
 UObject* UAssetManager_FightingGame::SynchronousLoadAsset(const FSoftObjectPath& AssetPath)
@@ -30,13 +39,4 @@ UObject* UAssetManager_FightingGame::SynchronousLoadAsset(const FSoftObjectPath&
 		return AssetPath.TryLoad();
 	}
 	return nullptr;
-}
-
-void UAssetManager_FightingGame::AddLoadedAsset(const UObject* Asset)
-{
-	if (Asset)
-	{
-		FScopeLock LoaddedAssetLock(&LoadedAsset_CriticalSelectionHandle);
-		LoadedAssets.Add(Asset);
-	}
 }

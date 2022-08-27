@@ -1,14 +1,15 @@
 #include "EnhancedInputComponent_FightingGame.h"
 #include "Engine/Engine.h"
 
-UEnhancedInputComponent_FightingGame::UEnhancedInputComponent_FightingGame(const FObjectInitializer& FObjectInitializer)
-	: Super(FObjectInitializer)
-{}
-
 void UEnhancedInputComponent_FightingGame::BeginPlay()
 {
 	Super::BeginPlay();
 	SetIsReplicated(true);
+}
+
+void UEnhancedInputComponent_FightingGame::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
 }
 
 void UEnhancedInputComponent_FightingGame::CaptureInputActionValue_Implementation(const FInputActionInstance& InputActionInstance)

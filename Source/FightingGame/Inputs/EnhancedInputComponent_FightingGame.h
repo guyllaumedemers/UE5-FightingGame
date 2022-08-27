@@ -15,8 +15,9 @@ class FIGHTINGGAME_API UEnhancedInputComponent_FightingGame : public UEnhancedIn
 
 protected:
 
-	UEnhancedInputComponent_FightingGame(const FObjectInitializer& FObjectInitializer = FObjectInitializer::Get());
+	UEnhancedInputComponent_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:
 

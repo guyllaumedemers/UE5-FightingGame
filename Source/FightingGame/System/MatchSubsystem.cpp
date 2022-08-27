@@ -15,6 +15,16 @@ UMatchSubsystem::UMatchSubsystem(const FObjectInitializer& ObjectInitializer)
 	ASC->SetupAbilitySystemComponent_Init<UAbilitySet_World>();
 }
 
+void UMatchSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+}
+
+void UMatchSubsystem::Deinitialize()
+{
+	Super::Deinitialize();
+}
+
 UAbilitySystemComponent* UMatchSubsystem::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent.Get();

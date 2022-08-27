@@ -13,7 +13,7 @@ struct FHealthStateAttribute
 		: bIsImmutable(false)
 	{}
 
-	FORCEINLINE bool IsImmutable() const			{ return bIsImmutable; }
+	FORCEINLINE bool IsImmutable() const { return bIsImmutable; }
 	FORCEINLINE void IsImmutable(const bool& Value) { bIsImmutable = Value; }
 
 private:
@@ -67,7 +67,6 @@ class FIGHTINGGAME_API UHealthComponent : public UGameFrameworkComponent
 
 protected:
 
-	UHealthComponent(const FObjectInitializer& FObjectInitializer = FObjectInitializer::Get());
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 

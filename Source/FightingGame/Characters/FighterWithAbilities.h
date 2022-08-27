@@ -5,8 +5,6 @@
 #include "AbilitySystemInterface.h"
 #include "FighterWithAbilities.generated.h"
 
-class UAbilitySystemComponent_FightingGame;
-
 UCLASS()
 class FIGHTINGGAME_API AFighterWithAbilities : public AFighter, public IAbilitySystemInterface
 {

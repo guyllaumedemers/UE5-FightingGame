@@ -1,9 +1,5 @@
 #include "GameplayAbility_RageDrive.h"
 
-UGameplayAbility_RageDrive::UGameplayAbility_RageDrive(const FObjectInitializer& ObjectInitializer)
-{
-}
-
 void UGameplayAbility_RageDrive::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	const FGameplayEventData* TriggerEventData)

@@ -24,6 +24,9 @@ struct FNativeGameplayTag_FightingGame
 	FGameplayTag S_R1;
 	FGameplayTag T_R2;
 
+	FNativeGameplayTag_FightingGame()
+	{}
+
 private:
 
 	void AddTag(FGameplayTag& OutTag, FName TagName, FString TagComment);
@@ -38,8 +41,11 @@ struct FTaggedInputAction_Pair
 {
 	GENERATED_BODY();
 
-	const UInputAction* GetInputAction() const { return InputAction; }
 	FGameplayTag GetInputGameplayTag() const { return Input_GameplayTag; }
+	const UInputAction* GetInputAction() const { return InputAction; }
+
+	FTaggedInputAction_Pair()
+	{}
 
 private:
 

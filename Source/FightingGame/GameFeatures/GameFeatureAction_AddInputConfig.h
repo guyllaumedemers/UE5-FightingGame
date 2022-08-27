@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFeatureAction.h"
-#include "FightingGame/Settings/PlayerMappableInput_ConfigPair.h"
+#include "FightingGame/Inputs/PlayerMappableInput_ConfigPair.h"
 #include "GameFeatureAction_AddInputConfig.generated.h"
 
 UCLASS(meta = (DisplayName = "Add Input Config"))
@@ -12,6 +12,10 @@ class FIGHTINGGAME_API UGameFeatureAction_AddInputConfig : public UGameFeatureAc
 
 	UPROPERTY(EditAnywhere)
 	TArray<FPlayerMappableInput_PluginConfig> PlayerMappableInput_PluginConfigs;
+
+protected:
+
+	UGameFeatureAction_AddInputConfig(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 
 public:
 

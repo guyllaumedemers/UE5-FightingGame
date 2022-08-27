@@ -1,10 +1,6 @@
 #include "AbilitySystemComponent_FightingGame.h"
 #include "FightingGame/Abilities/AbilitySet_Fighter.h"
 
-UAbilitySystemComponent_FightingGame::UAbilitySystemComponent_FightingGame(const FObjectInitializer& ObjectInitializer)
-{
-}
-
 void UAbilitySystemComponent_FightingGame::RegisterAbilitySystemComponent_NewAbility(UGameplayAbility* NewAbility)
 {
 	check(NewAbility);

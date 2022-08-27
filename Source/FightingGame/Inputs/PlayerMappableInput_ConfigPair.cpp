@@ -1,5 +1,5 @@
 #include "PlayerMappableInput_ConfigPair.h"
-#include "GameUserSettings_FightingGame.h"
+#include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 #include "FightingGame/System/AssetManager_FightingGame.h"
 #include "PlayerMappableInputConfig.h"
 

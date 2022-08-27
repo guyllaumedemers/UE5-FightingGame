@@ -9,8 +9,7 @@ class FIGHTINGGAME_API UCameraSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
-	/*
-	 *	Will handle Camera Behaviour when Stage is loaded and Players Battle
-	 *
-	 */
+protected:
+
+	UCameraSubsystem(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 };

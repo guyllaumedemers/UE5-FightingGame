@@ -20,13 +20,13 @@ struct FPlayerMappableInput_PluginConfig
 	UPROPERTY(EditAnywhere, Category = "Mappable Input")	// useless for now, we do not handle replication so far
 	uint8 bServerComponent : 1;
 
+	static void UnRegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
+	static void RegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
+
 	FPlayerMappableInput_PluginConfig()
 		: bClientComponent(true)
 		, bServerComponent(true)
 	{}
-
-	static void RegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
-	static void UnRegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig);
 };
 
 USTRUCT()

@@ -13,7 +13,7 @@ class FIGHTINGGAME_API UGameplayAbility_RageDrive : public UGameplayAbility
 
 protected:
 
-	UGameplayAbility_RageDrive(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	UGameplayAbility_RageDrive(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 	virtual void OnRemoveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 };

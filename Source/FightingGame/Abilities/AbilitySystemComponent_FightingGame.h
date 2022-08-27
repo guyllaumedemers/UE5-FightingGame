@@ -16,7 +16,7 @@ class FIGHTINGGAME_API UAbilitySystemComponent_FightingGame : public UAbilitySys
 
 protected:
 
-	UAbilitySystemComponent_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	UAbilitySystemComponent_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 
 public:
 

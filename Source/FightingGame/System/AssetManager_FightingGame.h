@@ -9,8 +9,15 @@ class FIGHTINGGAME_API UAssetManager_FightingGame : public UAssetManager
 {
 	GENERATED_BODY()
 
+	TSet<const UObject*> LoadedAssets;
+	FCriticalSection LoadedAsset_CriticalSelectionHandle;
+
+	void AddLoadedAsset(const UObject* Asset);
+	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
+
 protected:
 
+	UAssetManager_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void StartInitialLoading() override;
 
 public:
@@ -19,14 +26,6 @@ public:
 
 	template<typename AssetType>
 	static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true);
-
-private:
-
-	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
-	void AddLoadedAsset(const UObject* Asset);
-
-	FCriticalSection LoadedAsset_CriticalSelectionHandle;
-	TSet<const UObject*> LoadedAssets;
 };
 
 template <typename AssetType>

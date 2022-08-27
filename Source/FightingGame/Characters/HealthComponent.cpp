@@ -1,10 +1,6 @@
 #include "HealthComponent.h"
 #include "Engine/Engine.h"
 
-UHealthComponent::UHealthComponent(const FObjectInitializer& FObjectInitializer)
-	: Super(FObjectInitializer)
-{}
-
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();

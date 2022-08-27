@@ -32,7 +32,9 @@ public:
 template <typename UserClass, typename TypeClass>
 void UAbilitySystemComponent_FightingGame::SetupAbilitySystemComponent_Init(UObject* ASC_Owner)
 {
-	GetOrCreateAttributeSubobject(TSubclassOf<UserClass>());
+	const UAttributeSet* AttributeSet = GetOrCreateAttributeSubobject(TSubclassOf<UserClass>());
+
+	check(AttributeSet);
 
 	UAbilitySystemComponent* ASC = Cast<IAbilitySystemInterface>(ASC_Owner)->GetAbilitySystemComponent();
 

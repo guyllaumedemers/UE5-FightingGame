@@ -17,6 +17,7 @@ class FIGHTINGGAME_API UAttributeSet_World : public UAttributeSet
 	GENERATED_BODY()
 
 	// Begin GameplayAttribute
+	UPROPERTY(EditDefaultsOnly)
 	FGameplayAttributeData Time;
 	// End GameplayAttribute
 

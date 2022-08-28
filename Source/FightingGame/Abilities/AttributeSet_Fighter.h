@@ -17,8 +17,11 @@ class FIGHTINGGAME_API UAttributeSet_Fighter : public UAttributeSet
 	GENERATED_BODY()
 
 	// Begin GameplayAttribute
+	UPROPERTY(EditDefaultsOnly)
 	FGameplayAttributeData RageDrive;
+	UPROPERTY(EditDefaultsOnly)
 	FGameplayAttributeData Health;
+	UPROPERTY(EditDefaultsOnly)
 	FGameplayAttributeData BaseDamage;
 	// End GameplayAttribute
 

@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
 #include "AbilitySystemInterface.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent_FightingGame.generated.h"

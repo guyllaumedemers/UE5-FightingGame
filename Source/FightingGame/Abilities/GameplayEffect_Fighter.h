@@ -11,7 +11,7 @@ class FIGHTINGGAME_API UGameplayEffect_Fighter : public UGameplayEffect
 
 	void SetGameplayModifierInfo(FGameplayModifierInfo& OutModifier,
 		FGameplayAttribute GameplayAttribute,
-		EGameplayModOp::Type,
+		TEnumAsByte<EGameplayModOp::Type> GameplayModOp,
 		FGameplayEffectModifierMagnitude ModifierMagnitude,
 		FGameplayTagRequirements SourceTags,
 		FGameplayTagRequirements TargetTags

@@ -34,4 +34,21 @@ UGameplayEffect_Fighter::UGameplayEffect_Fighter(const FObjectInitializer& Objec
 		FGameplayTagRequirements(),
 		FGameplayTagRequirements()
 	);
+
+	Modifiers.AddUnique(RageDrive);
+	Modifiers.AddUnique(Health);
+	Modifiers.AddUnique(BaseDamage);
+}
+
+void UGameplayEffect_Fighter::SetGameplayModifierInfo(FGameplayModifierInfo& OutModifier,
+	FGameplayAttribute GameplayAttribute, TEnumAsByte<EGameplayModOp::Type> GameplayModOp,
+	FGameplayEffectModifierMagnitude ModifierMagnitude, FGameplayTagRequirements SourceTags,
+	FGameplayTagRequirements TargetTags)
+{
+	OutModifier = FGameplayModifierInfo();
+	OutModifier.Attribute = GameplayAttribute;
+	OutModifier.ModifierOp = GameplayModOp;
+	OutModifier.ModifierMagnitude = ModifierMagnitude;
+	OutModifier.SourceTags = SourceTags;
+	OutModifier.TargetTags = TargetTags;
 }

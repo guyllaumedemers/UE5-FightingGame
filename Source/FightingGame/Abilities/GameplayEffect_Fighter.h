@@ -9,8 +9,16 @@ class FIGHTINGGAME_API UGameplayEffect_Fighter : public UGameplayEffect
 {
 	GENERATED_BODY()
 
+	void SetGameplayModifierInfo(FGameplayModifierInfo& OutModifier,
+		FGameplayAttribute GameplayAttribute,
+		EGameplayModOp::Type,
+		FGameplayEffectModifierMagnitude ModifierMagnitude,
+		FGameplayTagRequirements SourceTags,
+		FGameplayTagRequirements TargetTags
+	);
+
 protected:
 
-	UGameplayEffect_Fighter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
+	UGameplayEffect_Fighter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 };

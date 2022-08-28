@@ -1,11 +1,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/GameplayAbility.h"
+#include "FightingGame/GameplayAbility_World.h"
 #include "GameplayAbility_Timer.generated.h"
 
 UCLASS()
-class FIGHTINGGAME_API UGameplayAbility_Timer : public UGameplayAbility
+class FIGHTINGGAME_API UGameplayAbility_Timer : public UGameplayAbility_World
 {
 	GENERATED_BODY()
 

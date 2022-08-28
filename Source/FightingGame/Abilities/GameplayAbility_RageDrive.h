@@ -1,15 +1,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/GameplayAbility.h"
+#include "GameplayAbility_Fighter.h"
 #include "GameplayAbility_RageDrive.generated.h"
 
 UCLASS()
-class FIGHTINGGAME_API UGameplayAbility_RageDrive : public UGameplayAbility
+class FIGHTINGGAME_API UGameplayAbility_RageDrive : public UGameplayAbility_Fighter
 {
 	GENERATED_BODY()
-
-		// Input Private Fields here
 
 protected:
 

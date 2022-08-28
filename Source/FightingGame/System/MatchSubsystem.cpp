@@ -1,5 +1,5 @@
 #include "MatchSubsystem.h"
-#include "FightingGame/Player/AbilitySystemComponentHandle_World.h"
+#include "FightingGame/World/AbilitySystemComponentHandle_World.h"
 #include "FightingGame/Abilities/AbilitySystemComponent_FightingGame.h"
 
 void UMatchSubsystem::Initialize(FSubsystemCollectionBase& Collection)

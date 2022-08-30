@@ -24,20 +24,24 @@ protected:
 
 public:
 
-	template<typename UserClass, typename TypeClass>
+	template<typename AttributeSetClass, typename GameEffectClass>
 	void SetupAbilitySystemComponent_Init(UObject* ASC_Owner);
 };
 
-template <typename UserClass, typename TypeClass>
+template <typename AttributeSetClass, typename GameEffectClass>
 void UAbilitySystemComponent_FightingGame::SetupAbilitySystemComponent_Init(UObject* ASC_Owner)
 {
-	const UAttributeSet* AttributeSet = GetOrCreateAttributeSubobject(TSubclassOf<UserClass>());
-
-	check(AttributeSet);
-
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Red, TEXT("INside Template function"));
+	}
 	UAbilitySystemComponent* ASC = Cast<IAbilitySystemInterface>(ASC_Owner)->GetAbilitySystemComponent();
 
 	check(ASC);
+
+	const UAttributeSet* AttributeSet = ASC->AddSet<AttributeSetClass>();
+
+	check(AttributeSet);
 
 	FGameplayEffectContextHandle GEContextHandle = ASC->MakeEffectContext();
 
@@ -45,9 +49,9 @@ void UAbilitySystemComponent_FightingGame::SetupAbilitySystemComponent_Init(UObj
 	{
 		GEContextHandle.AddSourceObject(ASC_Owner);
 
-		FGameplayEffectSpecHandle GESpecHandle = ASC->MakeOutgoingSpec(TSubclassOf<TypeClass>(), 1, GEContextHandle);
+		FGameplayEffectSpecHandle GESpecHandle = ASC->MakeOutgoingSpec(TSubclassOf<GameEffectClass>(), 1, GEContextHandle);
 
-		if(GESpecHandle.IsValid())
+		if (GESpecHandle.IsValid())
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*GESpecHandle.Data.Get());
 		}

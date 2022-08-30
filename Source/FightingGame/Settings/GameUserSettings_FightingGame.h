@@ -1,12 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PlayerMappableInputConfig.h"
 #include "GameFramework/GameUserSettings.h"
+#include "PlayerMappableInputConfig.h"
+#include "FightingGame/Inputs/TaggedInputAction_Config.h"
 #include "GameUserSettings_FightingGame.generated.h"
-
-class UTaggedInputAction_Config;
-class UPlayerMappableInputConfig;
 
 UCLASS()
 class FIGHTINGGAME_API UGameUserSettings_FightingGame : public UGameUserSettings

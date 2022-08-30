@@ -1,7 +1,6 @@
 #include "PlayerMappableInput_ConfigPair.h"
-#include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 #include "FightingGame/System/AssetManager_FightingGame.h"
-#include "PlayerMappableInputConfig.h"
+#include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 
 void FPlayerMappableInput_PluginConfig::RegisterMappableInputConfig(const FPlayerMappableInput_PluginConfig& InMappableInputConfig)
 {

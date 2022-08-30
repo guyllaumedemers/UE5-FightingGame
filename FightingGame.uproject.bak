@@ -55,11 +55,11 @@
 			"Enabled": true
 		},
 		{
-			"Name": "FightingCore",
+			"Name": "FightingMaps",
 			"Enabled": true
 		},
 		{
-			"Name": "FightingMaps",
+			"Name": "FightingCore",
 			"Enabled": true
 		}
 	]

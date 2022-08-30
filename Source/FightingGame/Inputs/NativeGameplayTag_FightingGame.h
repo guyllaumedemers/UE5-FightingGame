@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "EnhancedInput/Public/InputAction.h"
 #include "NativeGameplayTag_FightingGame.generated.h"
 
 struct FNativeGameplayTag_FightingGame
@@ -33,8 +34,6 @@ private:
 
 	static FNativeGameplayTag_FightingGame Singleton;
 };
-
-class UInputAction;
 
 USTRUCT()
 struct FTaggedInputAction_Pair

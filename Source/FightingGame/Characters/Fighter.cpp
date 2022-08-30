@@ -1,5 +1,4 @@
 #include "Fighter.h"
-#include "HealthComponent.h"
 #include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 #include "FightingGame/Inputs/EnhancedInputComponent_FightingGame.h"
 #include <EnhancedInputSubsystems.h>

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystemInterface.h"
 #include "GameFramework/Actor.h"
+#include "AbilitySystemInterface.h"
 #include "AbilitySystemComponentHandle_World.generated.h"
 
 UCLASS()

@@ -1,5 +1,4 @@
 #include "HealthComponent.h"
-#include "Engine/Engine.h"
 
 void UHealthComponent::BeginPlay()
 {

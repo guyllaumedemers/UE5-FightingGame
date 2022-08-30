@@ -15,5 +15,5 @@ void UMatchSubsystem::Deinitialize()
 void UMatchSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 {
 	Super::OnWorldBeginPlay(InWorld);
-	TimerHandler = CreateDefaultSubobject<AAbilitySystemComponentHandle_World>("Timer Handler");
+	//AbilitySystemComponentHandle = CreateDefaultSubobject<AAbilitySystemComponentHandle_World>("Ability System Component Handle");
 }

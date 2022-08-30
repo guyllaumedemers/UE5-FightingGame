@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/GameplayAbility.h"
 #include "Engine/DataAsset.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/Texture.h"
 #include "CharacterAsset.generated.h"
 

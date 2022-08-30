@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
+#include "AbilitySystemComponent.h"
 #include "AttributeSet_World.generated.h"
 
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \

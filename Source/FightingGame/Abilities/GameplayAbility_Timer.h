@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FightingGame/GameplayAbility_World.h"
+#include "GameplayAbility_World.h"
 #include "GameplayAbility_Timer.generated.h"
 
 UCLASS()

@@ -2,9 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "ModularCharacter.h"
+#include "HealthComponent.h"
 #include "Fighter.generated.h"
-
-class UHealthComponent;
 
 UCLASS()
 class FIGHTINGGAME_API AFighter : public AModularCharacter

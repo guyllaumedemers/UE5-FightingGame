@@ -9,7 +9,7 @@ class FIGHTINGGAME_API UMatchSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
-	TObjectPtr<AActor> TimerHandler;
+	TObjectPtr<AActor> AbilitySystemComponentHandle;
 
 protected:
 

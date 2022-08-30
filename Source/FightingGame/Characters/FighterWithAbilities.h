@@ -3,9 +3,8 @@
 #include "CoreMinimal.h"
 #include "Fighter.h"
 #include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 #include "FighterWithAbilities.generated.h"
-
-class UAttributeSet;
 
 UCLASS()
 class FIGHTINGGAME_API AFighterWithAbilities : public AFighter, public IAbilitySystemInterface

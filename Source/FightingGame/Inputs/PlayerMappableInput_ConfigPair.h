@@ -2,9 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "PlayerMappableInputConfig.h"
 #include "PlayerMappableInput_ConfigPair.generated.h"
-
-class UPlayerMappableInputConfig;
 
 USTRUCT()
 struct FPlayerMappableInput_PluginConfig

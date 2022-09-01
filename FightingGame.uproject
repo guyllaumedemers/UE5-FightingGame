@@ -57,10 +57,6 @@
 		{
 			"Name": "FightingCore",
 			"Enabled": true
-		},
-		{
-			"Name": "FightingMaps",
-			"Enabled": true
 		}
 	]
 }

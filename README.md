@@ -1,6 +1,4 @@
-# UE5-FightingGame
-
-## Project Breakdown
+# UE5-FightingGame - Project
 
 ### System Requirements:
 1. GameFeatures & Modular Gameplay

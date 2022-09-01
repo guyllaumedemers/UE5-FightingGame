@@ -1,4 +1,5 @@
 # UE5-FightingGame - Project
+> Issues: Haven't been able to create new Plugin and utilize them as they disapear right after Editor Restart. Config files have been re-initialized, .uproject plugin config have been double checked and .uplugin are confirmed to be in their proper state.
 
 ### System Requirements:
 1. GameFeatures & Modular Gameplay

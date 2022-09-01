@@ -10,10 +10,7 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"CoreUObject",
-				"EnhancedInput",
-				"ModularGameplay",
-				"GameplayAbilities"
+				"CoreUObject"
 			]
 		}
 	],
@@ -43,19 +40,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "GameplayAbilities",
-			"Enabled": true
-		},
-		{
-			"Name": "ModularGameplay",
-			"Enabled": true
-		},
-		{
-			"Name": "GameFeatures",
-			"Enabled": true
-		},
-		{
-			"Name": "FightingCore",
+			"Name": "AbilitySystemGameFeatureActions",
 			"Enabled": true
 		}
 	]

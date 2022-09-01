@@ -23,6 +23,9 @@ struct FTaggedInputMappingContext_Pair
 	const FGameplayTag& GetGameplayTag() const { return GameplayTag; }
 	const UInputMappingContext* GetInputMappingContext() const { return InputMappingContext.Get(); }
 
+	static bool UnRegisterInputMappingContext_Pair(const FTaggedInputMappingContext_Pair& TaggedInputMappingContext_Pair);
+	static bool RegisterInputMappingContext_Pair(const FTaggedInputMappingContext_Pair& TaggedInputMappingContext_Pair);
+
 private:
 
 	UPROPERTY(EditDefaultsOnly)

@@ -1,6 +1,4 @@
-# UE5-FightingGame
-
-## Project Breakdown
+# UE5-FightingGame - Project
 
 ### System Requirements:
 1. GameFeatures & Modular Gameplay
@@ -30,21 +28,15 @@ Subsystem Manager which will handle CommonUIActivableWidget pushing and popping 
 Note: that GameState and PlayerState are replicated and accessible on both Server-Client. 
 
 ### Components
-Character Components should be designed for replication with delegate callback to interact with external systems.
+Character Components should be designed for replication with delegate callback to interact with external systems. Health Component & Rage Drive Component both have properties that interact directly with the Ability System Component and uses AttributeSet. OnChangedEvent triggers callback for Widget udpates.
 
 ### Matchmaking Subsystem
-Subsystem handling Matchmaking and interact with GameMode PostLogin()
+Subsystem handling Matchmaking and interact with GameMode PostLogin(). MatchMaking will be looking for players within a range that match player of same rank.
 
 ### Scoring Subsystem
 Subsystem tracking Rounds Outcome & Match Outcome
 
 ### [PROJECT PATH](https://github.com/guyllaumedemers/UE5-FightingGame/tree/master/Source/FightingGame)
-```
-1.
-2.
-3.
-4.
-```
 
 ## Tasks
 - [ ] ?

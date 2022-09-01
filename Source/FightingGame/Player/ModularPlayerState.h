@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class FIGHTINGGAME_API AModularPlayerState : public APlayerState
 {
 	GENERATED_BODY()

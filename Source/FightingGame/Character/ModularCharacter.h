@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ModularCharacter.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class FIGHTINGGAME_API AModularCharacter : public ACharacter
 {
 	GENERATED_BODY()

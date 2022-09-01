@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFeatureAction.h"
+#include <InputMappingContext.h>
 #include "GameFeatureAction_AddInputs.generated.h"
 
 /**
@@ -13,6 +14,9 @@ UCLASS()
 class FIGHTINGGAME_API UGameFeatureAction_AddInputs : public UGameFeatureAction
 {
 	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, meta=(ShortTooltip="Input Mappings - UEnhancedLocalPlayerInputSubsystem"))
+	TArray<TSoftObjectPtr<UInputMappingContext>> InputMappings;
 
 public:
 

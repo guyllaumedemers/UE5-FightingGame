@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class FIGHTINGGAME_API AModularGameMode : public AGameMode
 {
 	GENERATED_BODY()

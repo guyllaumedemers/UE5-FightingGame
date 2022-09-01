@@ -31,7 +31,7 @@ Note: that GameState and PlayerState are replicated and accessible on both Serve
 Character Components should be designed for replication with delegate callback to interact with external systems.
 
 ### Matchmaking Subsystem
-Subsystem handling Matchmaking and interact with GameMode PostLogin()
+Subsystem handling Matchmaking and interact with GameMode PostLogin(). MatchMaking will be looking for players within a range that match player of same rank.
 
 ### Scoring Subsystem
 Subsystem tracking Rounds Outcome & Match Outcome

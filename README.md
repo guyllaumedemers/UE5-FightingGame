@@ -39,12 +39,6 @@ Subsystem handling Matchmaking and interact with GameMode PostLogin()
 Subsystem tracking Rounds Outcome & Match Outcome
 
 ### [PROJECT PATH](https://github.com/guyllaumedemers/UE5-FightingGame/tree/master/Source/FightingGame)
-```
-1.
-2.
-3.
-4.
-```
 
 ## Tasks
 - [ ] ?

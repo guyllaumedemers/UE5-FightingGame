@@ -13,10 +13,8 @@ class FIGHTINGGAME_API AModularCharacter : public ACharacter
 
 public:
 
-	//~AActor INTERFACE
-	AModularCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {}
+	AModularCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	//~AActor INTERFACE
 };

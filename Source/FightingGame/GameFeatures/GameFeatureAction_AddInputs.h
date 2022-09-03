@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFeatureAction.h"
-#include <InputMappingContext.h>
+#include "FightingGame/Settings/TaggedPlayerMappableInput_Pair.h"
 #include "GameFeatureAction_AddInputs.generated.h"
 
 /**
@@ -16,15 +16,15 @@ class FIGHTINGGAME_API UGameFeatureAction_AddInputs : public UGameFeatureAction
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, meta=(ShortTooltip="Input Mappings - UEnhancedLocalPlayerInputSubsystem"))
-	TArray<TSoftObjectPtr<UInputMappingContext>> InputMappings;
+	TArray<FTaggedPlayerMappableInput_Pair> TaggedPlayerMappableInput_Pairs;
 
 public:
 
 	UGameFeatureAction_AddInputs()
 	{}
 
-	//~GameFeature_Action INTERFACE
-	virtual void OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context) override;
+	virtual void OnGameFeatureRegistering() override;
+	virtual void OnGameFeatureUnregistering() override;
 	virtual void OnGameFeatureActivating(FGameFeatureActivatingContext& Context) override;
-	//~GameFeature_Action INTERFACE
+	virtual void OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context) override;
 };

@@ -16,10 +16,8 @@ class FIGHTINGGAME_API AModularPlayerState : public APlayerState
 
 public:
 
-	//~AActor INTERFACE
 	AModularPlayerState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	//~AActor INTERFACE
 };

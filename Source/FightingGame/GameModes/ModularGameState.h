@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/GameState.h"
 #include "ModularGameState.generated.h"
 
@@ -14,12 +15,15 @@ class FIGHTINGGAME_API AModularGameState : public AGameState
 {
 	GENERATED_BODY()
 
+	UPROPERTY(EditDefaultsOnly, meta = (ShortTooltip = "GameState Tag Handle"))
+	FGameplayTagContainer GameplayTagContainer;
+
 public:
 
-	//~AActor INTERFACE
 	AModularGameState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	//~AActor INTERFACE
+
+	const FGameplayTagContainer& GetGameplayTagContainer() const { return GameplayTagContainer; }
 };

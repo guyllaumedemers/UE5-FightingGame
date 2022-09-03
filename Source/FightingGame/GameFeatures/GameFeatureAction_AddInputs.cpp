@@ -2,19 +2,30 @@
 
 
 #include "GameFeatureAction_AddInputs.h"
+#include "FightingGame/Settings/TaggedPlayerMappableInput_Pair.h"
 
-void UGameFeatureAction_AddInputs::OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context)
+void UGameFeatureAction_AddInputs::OnGameFeatureRegistering()
 {
-	Super::OnGameFeatureDeactivating(Context);
+	Super::OnGameFeatureRegistering();
+	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Register(InPair);
+}
 
-	// Where should the inputs registered be removed from?
+void UGameFeatureAction_AddInputs::OnGameFeatureUnregistering()
+{
+	Super::OnGameFeatureUnregistering();
+	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Unregister(InPair);
 }
 
 void UGameFeatureAction_AddInputs::OnGameFeatureActivating(FGameFeatureActivatingContext& Context)
 {
 	Super::OnGameFeatureActivating(Context);
+	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Activate(InPair);
+}
 
-	// Where should the inputs registered be stored in?
+void UGameFeatureAction_AddInputs::OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context)
+{
+	Super::OnGameFeatureDeactivating(Context);
+	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Deactivate(InPair);
 }
 
 /*

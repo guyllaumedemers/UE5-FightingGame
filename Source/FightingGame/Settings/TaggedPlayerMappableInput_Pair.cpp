@@ -3,44 +3,38 @@
 
 #include "TaggedPlayerMappableInput_Pair.h"
 #include "GameUserSettings_FightingGame.h"
-#include "Engine/AssetManager.h"
+#include "FightingGame/System/AssetManager_FightingGame.h"
 
 bool FTaggedPlayerMappableInput_Pair::Register(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair)
 {
-	UGameUserSettings_FightingGame* UserSettings = &UGameUserSettings_FightingGame::Get();
+	UAssetManager_FightingGame* AssetManager = &UAssetManager_FightingGame::Get();
 
-	check(UserSettings);
+	check(AssetManager);
 
-	const UPlayerMappableInputConfig* MappableinputConfig_AssetPtr = TaggedPlayerMappableInput_Pair.GetPlayerMappableInput();
-
-	check(MappableinputConfig_AssetPtr);
-
-	if (TSharedPtr<FStreamableHandle> StreamableHandle = UAssetManager::Get().LoadPrimaryAsset(MappableinputConfig_AssetPtr->GetPrimaryAssetId()))
+	if(UPlayerMappableInputConfig* PlayerMappableInputConfig = AssetManager->GetAsset(TaggedPlayerMappableInput_Pair.GetPlayerMappableInput()))
 	{
-		/*check(StreamableHandle.IsValid());
-		UPlayerMappableInputConfig* Streamable_PlayerMappableInputConfig = Cast<UPlayerMappableInputConfig>(StreamableHandle.Get());
-		check(Streamable_PlayerMappableInputConfig);
-		return UserSettings->Register_PlayerMappableInputLoaded(TaggedPlayerMappableInput_Pair.GetGameplayTag(), FPlayerMappableInput_Loaded(Streamable_PlayerMappableInputConfig));*/
+		UGameUserSettings_FightingGame* UserSettings = &UGameUserSettings_FightingGame::Get();
+
+		check(UserSettings);
+
+		return UserSettings->Register_PlayerMappableInputLoaded(TaggedPlayerMappableInput_Pair.GetGameplayTag(), PlayerMappableInputConfig);
 	}
 	return false;
 }
 
 bool FTaggedPlayerMappableInput_Pair::Unregister(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair)
 {
-	UGameUserSettings_FightingGame* UserSettings = &UGameUserSettings_FightingGame::Get();
+	UAssetManager_FightingGame* AssetManager = &UAssetManager_FightingGame::Get();
 
-	check(UserSettings);
+	check(AssetManager);
 
-	const UPlayerMappableInputConfig* MappableinputConfig_AssetPtr = TaggedPlayerMappableInput_Pair.GetPlayerMappableInput();
-
-	check(MappableinputConfig_AssetPtr);
-
-	if (TSharedPtr<FStreamableHandle> StreamableHandle = UAssetManager::Get().LoadPrimaryAsset(MappableinputConfig_AssetPtr->GetPrimaryAssetId()))
+	if (UPlayerMappableInputConfig* PlayerMappableInputConfig = AssetManager->GetAsset(TaggedPlayerMappableInput_Pair.GetPlayerMappableInput()))
 	{
-		/*check(StreamableHandle.IsValid());
-		UPlayerMappableInputConfig* Streamable_PlayerMappableInputConfig = Cast<UPlayerMappableInputConfig>(StreamableHandle.Get());
-		check(Streamable_PlayerMappableInputConfig);
-		return UserSettings->Unregister_PlayerMappableInputLoaded(TaggedPlayerMappableInput_Pair.GetGameplayTag(), FPlayerMappableInput_Loaded(Streamable_PlayerMappableInputConfig));*/
+		UGameUserSettings_FightingGame* UserSettings = &UGameUserSettings_FightingGame::Get();
+
+		check(UserSettings);
+
+		return UserSettings->Unregister_PlayerMappableInputLoaded(TaggedPlayerMappableInput_Pair.GetGameplayTag(), PlayerMappableInputConfig);
 	}
 	return false;
 }

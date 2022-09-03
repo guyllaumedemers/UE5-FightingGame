@@ -43,7 +43,7 @@ struct FTaggedPlayerMappableInput_Pair
 		, bShouldActivateAutomatically(false)
 	{}
 
-	const UPlayerMappableInputConfig *GetPlayerMappableInput() const { return PlayerMappableInput.Get(); }
+	TSoftObjectPtr<UPlayerMappableInputConfig> GetPlayerMappableInput() const { return PlayerMappableInput; }
 	const FGameplayTag& GetGameplayTag() const { return GameplayTag; }
 	bool ShouldActivateAutomatically() const { return bShouldActivateAutomatically; }
 

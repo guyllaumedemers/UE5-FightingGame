@@ -3,14 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InputAction.h"
-#include "Containers/Queue.h"
 #include "Combo.generated.h"
 
-/*	
- *	TQueue not exposed to Reflection?
- *
- */
+class UInputAction;
 
 USTRUCT()
 struct FCombo_SimpleEntry

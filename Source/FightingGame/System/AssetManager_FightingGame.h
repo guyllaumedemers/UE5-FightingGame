@@ -27,11 +27,11 @@ public:
 	static UAssetManager_FightingGame& Get();
 
 	template<typename AssetType>
-	AssetType* GetAsset(const TSoftObjectPtr<AssetType> AssetPointer, bool bKeepInMemory = true);
+	AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory = true);
 };
 
 template <typename AssetType>
-AssetType* UAssetManager_FightingGame::GetAsset(const TSoftObjectPtr<AssetType> AssetPointer, bool bKeepInMemory)
+AssetType* UAssetManager_FightingGame::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bKeepInMemory)
 {
 	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
 	AssetType* LoadedAsset = nullptr;

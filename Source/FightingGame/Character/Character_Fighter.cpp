@@ -2,19 +2,12 @@
 
 
 #include "Character_Fighter.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "FightingGame/Inputs/EnhancedInputComponent_FightingGame.h"
+#include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 
 ACharacter_Fighter::ACharacter_Fighter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	USkeletalMeshComponent* SkeletalMeshComponentHandle = nullptr;
-	USkeletalMesh* MeshHandle = nullptr;
-
-	/*	
-	 *	Setup default here
-	 *
-	 */
 }
 
 void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -27,13 +20,21 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		check(EnhancedInputComponent);
 
-		const UDataAsset_InputConfig* InputConfig = nullptr;
+		const UGameUserSettings_FightingGame* UserSettings = &UGameUserSettings_FightingGame::Get();
 
-		check(InputConfig);
+		check(UserSettings);
 
-		for(const auto& TaggedInputAction_Pair : InputConfig->GetInputAction_Pairs())
+		const FInputConfig_Loaded* OutConfig = &UserSettings->Find(ThisClass::StaticClass());
+
+		check(OutConfig);
+
+		const UInputConfig* ThisClassConfig = OutConfig->GetInputConfig();
+
+		check(ThisClassConfig);
+
+		for(const auto& TaggedInputAction_Pair : ThisClassConfig->GetInputAction_Pairs())
 		{
-			EnhancedInputComponent->BindNativeAction(InputConfig, TaggedInputAction_Pair.GetGameplayTag(), ETriggerEvent::Triggered, this, &ThisClass::CaptureInput);
+			EnhancedInputComponent->BindNativeAction(ThisClassConfig, TaggedInputAction_Pair.GetGameplayTag(), ETriggerEvent::Triggered, this, &ThisClass::CaptureInput);
 		}
 	}
 }

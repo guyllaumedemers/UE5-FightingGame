@@ -46,7 +46,7 @@ void AModularPlayerController::OnPossess(APawn* InPawn)
 
 		for (const auto& InTag : TagArrayHandle)
 		{
-			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find_PlayerMappableInputLoaded(InTag);
+			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find(InTag);
 			EnhancedInputComponent->OnPossess(ActiveExperienceInput, InPawn);
 		}
 	}
@@ -70,7 +70,7 @@ void AModularPlayerController::OnUnPossess()
 
 		for (const auto& InTag : TagArrayHandle)
 		{
-			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find_PlayerMappableInputLoaded(InTag);
+			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find(InTag);
 			EnhancedInputComponent->OnUnPossess(ActiveExperienceInput, GetPawn());
 		}
 	}

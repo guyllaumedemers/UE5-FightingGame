@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
-#include "PlayerMappableInputConfig.h"
 #include "TaggedPlayerMappableInput_Pair.generated.h"
+
+class UPlayerMappableInputConfig;
 
 struct FPlayerMappableInput_Loaded
 {
@@ -47,10 +48,10 @@ struct FTaggedPlayerMappableInput_Pair
 	const FGameplayTag& GetGameplayTag() const { return GameplayTag; }
 	bool ShouldActivateAutomatically() const { return bShouldActivateAutomatically; }
 
-	static bool Register(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
-	static bool Unregister(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
-	static bool Activate(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
-	static bool Deactivate(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
+	static void Register(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
+	static void Unregister(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
+	static void Activate(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
+	static void Deactivate(const FTaggedPlayerMappableInput_Pair& TaggedPlayerMappableInput_Pair);
 
 private:
 

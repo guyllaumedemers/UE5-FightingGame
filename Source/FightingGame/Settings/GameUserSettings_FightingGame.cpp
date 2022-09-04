@@ -2,6 +2,7 @@
 
 
 #include "GameUserSettings_FightingGame.h"
+#include "FightingGame/Inputs/InputConfig.h"
 
 //~Static
 UGameUserSettings_FightingGame* UGameUserSettings_FightingGame::Singleton = nullptr;
@@ -16,24 +17,36 @@ UGameUserSettings_FightingGame& UGameUserSettings_FightingGame::Get()
 	return *Singleton;
 }
 
-bool UGameUserSettings_FightingGame::Register_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag, const FPlayerMappableInput_Loaded& MappableInput_Loaded)
+void UGameUserSettings_FightingGame::Register(const FPlayerMappableInput_Loaded& InPMI, const FGameplayTag& GameplayTag)
 {
-	PlayerMappableInputConfigs_Loaded.Add(GameplayTag, MappableInput_Loaded);
-	return true;
+	PlayerMappableInputConfigs_Loaded.Add(GameplayTag, InPMI);
 }
 
-bool UGameUserSettings_FightingGame::Unregister_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag, const FPlayerMappableInput_Loaded& MappableInput_Loaded)
+void UGameUserSettings_FightingGame::Unregister(const FGameplayTag& GameplayTag)
 {
 	PlayerMappableInputConfigs_Loaded.Remove(GameplayTag);
-	return true;
 }
 
-const FPlayerMappableInput_Loaded& UGameUserSettings_FightingGame::Find_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag) const
+const FPlayerMappableInput_Loaded& UGameUserSettings_FightingGame::Find(const FGameplayTag& GameplayTag) const
 {
-	return *PlayerMappableInputConfigs_Loaded.Find(GameplayTag);
+	const FPlayerMappableInput_Loaded* OutPMI = PlayerMappableInputConfigs_Loaded.Find(GameplayTag);
+	check(OutPMI);
+	return *OutPMI;
 }
 
-/*
- *	Find PlayerMappableConfig_Pair using GameplayTag, retrieve PMI (CommonUI PMI or Fighter PMI)
- *
- */
+void UGameUserSettings_FightingGame::Register(const FInputConfig_Loaded& InConfig, const TSubclassOf<APawn>& PawnSubClass)
+{
+	InputConfig_Loaded.Add(PawnSubClass, InConfig);
+}
+
+void UGameUserSettings_FightingGame::Unregister(const TSubclassOf<APawn>& PawnSubClass)
+{
+	InputConfig_Loaded.Remove(PawnSubClass);
+}
+
+const FInputConfig_Loaded& UGameUserSettings_FightingGame::Find(const TSubclassOf<APawn>& PawnSubClass) const
+{
+	const FInputConfig_Loaded* OutInputConfig = InputConfig_Loaded.Find(PawnSubClass);
+	check(OutInputConfig);
+	return *OutInputConfig;
+}

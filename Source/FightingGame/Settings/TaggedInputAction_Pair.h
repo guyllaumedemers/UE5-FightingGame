@@ -7,6 +7,8 @@
 #include "InputAction.h"
 #include "TaggedInputAction_Pair.generated.h"
 
+//class UInputAction;
+
 /**
  * 
  */

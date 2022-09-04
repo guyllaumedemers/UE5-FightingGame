@@ -3,13 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DataAsset_InputConfig.h"
 #include "EnhancedInputComponent.h"
+#include "InputConfig.h"
 #include "EnhancedInputComponent_FightingGame.generated.h"
 
 class ULocalPlayer;
 struct FPlayerMappableInput_Loaded;
-struct FGameplayTag;
 
 /**
  *
@@ -29,7 +28,7 @@ public:
 	void OnUnPossess(const FPlayerMappableInput_Loaded& MappingContext_Pair, APawn* Pawn);
 
 	template<typename UserClass, typename FncPtr>
-	void BindNativeAction(const UDataAsset_InputConfig* InputConfig, const FGameplayTag& GameplayTag, ETriggerEvent TriggerEvent, UserClass* Owner, FncPtr Delegate);
+	void BindNativeAction(const UInputConfig* InputConfig, const FGameplayTag& GameplayTag, ETriggerEvent TriggerEvent, UserClass* Owner, FncPtr Delegate);
 
 private:
 
@@ -38,7 +37,7 @@ private:
 };
 
 template <typename UserClass, typename FncPtr>
-void UEnhancedInputComponent_FightingGame::BindNativeAction(const UDataAsset_InputConfig* InputConfig, const FGameplayTag& GameplayTag, ETriggerEvent TriggerEvent, UserClass* Owner, FncPtr Delegate)
+void UEnhancedInputComponent_FightingGame::BindNativeAction(const UInputConfig* InputConfig, const FGameplayTag& GameplayTag, ETriggerEvent TriggerEvent, UserClass* Owner, FncPtr Delegate)
 {
 	check(InputConfig);
 

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "TaggedPlayerMappableInput_Pair.h"
+#include "FightingGame/Inputs/InputConfig.h"
 #include "GameFramework/GameUserSettings.h"
 #include "GameUserSettings_FightingGame.generated.h"
 
@@ -17,14 +18,25 @@ class FIGHTINGGAME_API UGameUserSettings_FightingGame : public UGameUserSettings
 	GENERATED_BODY()
 
 	TMap<FGameplayTag, FPlayerMappableInput_Loaded> PlayerMappableInputConfigs_Loaded;
+	TMap<TSubclassOf<APawn>, FInputConfig_Loaded> InputConfig_Loaded;
+
 	static UGameUserSettings_FightingGame* Singleton;
 
 public:
 
-	UGameUserSettings_FightingGame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
+	UGameUserSettings_FightingGame()
+		: PlayerMappableInputConfigs_Loaded(TMap<FGameplayTag, FPlayerMappableInput_Loaded>())
+		, InputConfig_Loaded(TMap<TSubclassOf<APawn>, FInputConfig_Loaded>())
+	{};
 
 	static UGameUserSettings_FightingGame& Get();
-	bool Register_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag, const FPlayerMappableInput_Loaded& MappableInput_Loaded);
-	bool Unregister_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag, const FPlayerMappableInput_Loaded& MappableInput_Loaded);
-	const FPlayerMappableInput_Loaded& Find_PlayerMappableInputLoaded(const FGameplayTag& GameplayTag) const;
+
+	void Register(const FPlayerMappableInput_Loaded& InPMI, const FGameplayTag& GameplayTag);
+	void Register(const FInputConfig_Loaded& InConfig, const TSubclassOf<APawn>& PawnSubClass);
+	 
+	void Unregister(const FGameplayTag& GameplayTag);
+	void Unregister(const TSubclassOf<APawn>& PawnSubClass);
+
+	const FPlayerMappableInput_Loaded& Find(const FGameplayTag& GameplayTag) const;
+	const FInputConfig_Loaded& Find(const TSubclassOf<APawn>& PawnSubClass) const;
 };

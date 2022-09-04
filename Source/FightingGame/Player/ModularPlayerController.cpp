@@ -30,8 +30,12 @@ void AModularPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	if(UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(InputComponent))
+	if(IsLocalController())
 	{
+		UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(InputComponent);
+
+		check(EnhancedInputComponent);
+
 		const AModularGameState* GameState = Cast<AModularGameState>(GetWorld()->GetGameState());
 
 		check(GameState);
@@ -40,7 +44,7 @@ void AModularPlayerController::OnPossess(APawn* InPawn)
 
 		GameState->GetGameplayTagContainer().GetGameplayTagArray(TagArrayHandle);
 
-		for(const auto& InTag : TagArrayHandle)
+		for (const auto& InTag : TagArrayHandle)
 		{
 			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find_PlayerMappableInputLoaded(InTag);
 			EnhancedInputComponent->OnPossess(ActiveExperienceInput, InPawn);
@@ -50,8 +54,12 @@ void AModularPlayerController::OnPossess(APawn* InPawn)
 
 void AModularPlayerController::OnUnPossess()
 {
-	if (UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(InputComponent))
+	if (IsLocalController())
 	{
+		UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(InputComponent);
+
+		check(EnhancedInputComponent);
+
 		const AModularGameState* GameState = Cast<AModularGameState>(GetWorld()->GetGameState());
 
 		check(GameState);

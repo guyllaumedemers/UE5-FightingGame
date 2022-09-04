@@ -6,6 +6,8 @@
 #include "ModularCharacter.h"
 #include "Character_Fighter.generated.h"
 
+struct FInputActionInstance;
+
 /**
  * 
  */
@@ -20,7 +22,10 @@ class FIGHTINGGAME_API ACharacter_Fighter : public AModularCharacter
 
 	// hold combo processing - animation cancelling
 
+	void CaptureInput(const FInputActionInstance& InputActionInstance);
+
 public:
 
 	ACharacter_Fighter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 };

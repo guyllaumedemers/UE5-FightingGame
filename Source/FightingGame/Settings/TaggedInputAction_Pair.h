@@ -23,9 +23,6 @@ struct FTaggedInputAction_Pair
 	const FGameplayTag& GetGameplayTag() const { return GameplayTag; }
 	const UInputAction* GetInputAction() const { return InputAction.Get(); }
 
-	static bool UnRegisterInputAction_Pair(const FTaggedInputAction_Pair& TaggedInputAction_Pair);
-	static bool RegisterInputAction_Pair(const FTaggedInputAction_Pair& TaggedInputAction_Pair);
-
 private:
 
 	UPROPERTY(EditDefaultsOnly)

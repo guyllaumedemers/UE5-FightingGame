@@ -11,12 +11,12 @@ class UInputConfig;
 /**
  * 
  */
-UCLASS()
+UCLASS(meta = (DisplayName = "Add Input Config", ScriptName="Input Config"))
 class FIGHTINGGAME_API UGameFeatureAction_AddInputConfig : public UGameFeatureAction
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, meta = (DisplayName = "Input Config List"))
 	TArray<TSoftObjectPtr<UInputConfig>> InputConfigs;
 
 public:

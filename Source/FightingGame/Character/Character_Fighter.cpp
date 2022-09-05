@@ -24,7 +24,7 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		check(UserSettings);
 
-		const FInputConfig_Loaded* OutConfig = &UserSettings->Find(ThisClass::StaticClass());
+		const FInputConfig_Loaded* OutConfig = &UserSettings->Find(ThisClass::GetClass());
 
 		check(OutConfig);
 
@@ -34,11 +34,17 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		for(const auto& TaggedInputAction_Pair : ThisClassConfig->GetInputAction_Pairs())
 		{
-			EnhancedInputComponent->BindNativeAction(ThisClassConfig, TaggedInputAction_Pair.GetGameplayTag(), ETriggerEvent::Triggered, this, &ThisClass::CaptureInput);
+			// gameplaytag are only useful when we want to hard reference a unique delegate
+			EnhancedInputComponent->BindNativeAction(ThisClassConfig, TaggedInputAction_Pair.GetGameplayTag(), ETriggerEvent::Started, this, &ThisClass::CaptureInput);
 		}
 	}
 }
 
 void ACharacter_Fighter::CaptureInput(const FInputActionInstance& InputActionInstance)
 {
+	if(GEngine)
+	{
+		FString PrintInputActionName = InputActionInstance.GetSourceAction()->GetName();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, *PrintInputActionName);
+	}
 }

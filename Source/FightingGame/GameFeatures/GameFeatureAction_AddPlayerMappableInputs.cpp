@@ -7,25 +7,25 @@
 void UGameFeatureAction_AddPlayerMappableInputs::OnGameFeatureRegistering()
 {
 	Super::OnGameFeatureRegistering();
-	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Register(InPair);
+	//for (const auto& InPair : MappableInputs_Pairs) FTaggedPlayerMappableInput_Pair::Register(InPair);
 }
 
 void UGameFeatureAction_AddPlayerMappableInputs::OnGameFeatureUnregistering()
 {
 	Super::OnGameFeatureUnregistering();
-	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Unregister(InPair);
+	//for (const auto& InPair : MappableInputs_Pairs) FTaggedPlayerMappableInput_Pair::Unregister(InPair);
 }
 
 void UGameFeatureAction_AddPlayerMappableInputs::OnGameFeatureActivating(FGameFeatureActivatingContext& Context)
 {
 	Super::OnGameFeatureActivating(Context);
-	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Activate(InPair);
+	for (const auto& InPair : MappableInputs_Pairs) FTaggedPlayerMappableInput_Pair::Register(InPair);
 }
 
 void UGameFeatureAction_AddPlayerMappableInputs::OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context)
 {
 	Super::OnGameFeatureDeactivating(Context);
-	for (const auto& InPair : TaggedPlayerMappableInput_Pairs) FTaggedPlayerMappableInput_Pair::Deactivate(InPair);
+	for (const auto& InPair : MappableInputs_Pairs) FTaggedPlayerMappableInput_Pair::Unregister(InPair);
 }
 
 /*

@@ -24,11 +24,6 @@ class FIGHTINGGAME_API UGameUserSettings_FightingGame : public UGameUserSettings
 
 public:
 
-	UGameUserSettings_FightingGame()
-		: PlayerMappableInputConfigs_Loaded(TMap<FGameplayTag, FPlayerMappableInput_Loaded>())
-		, InputConfig_Loaded(TMap<TSubclassOf<APawn>, FInputConfig_Loaded>())
-	{};
-
 	static UGameUserSettings_FightingGame& Get();
 
 	void Register(const FPlayerMappableInput_Loaded& InPMI, const FGameplayTag& GameplayTag);

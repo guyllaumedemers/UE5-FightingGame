@@ -2,6 +2,7 @@
 
 
 #include "GameUserSettings_FightingGame.h"
+#include "Engine/Engine.h"
 #include "FightingGame/Inputs/InputConfig.h"
 
 //~Static
@@ -10,9 +11,10 @@ UGameUserSettings_FightingGame* UGameUserSettings_FightingGame::Singleton = null
 
 UGameUserSettings_FightingGame& UGameUserSettings_FightingGame::Get()
 {
-	if(!Singleton)
+	if (!Singleton)
 	{
-		Singleton = NewObject<UGameUserSettings_FightingGame>();
+		Singleton = Cast<ThisClass>(GEngine->GameUserSettings.Get());
+		if (!Singleton) Singleton = NewObject<ThisClass>();
 	}
 	return *Singleton;
 }

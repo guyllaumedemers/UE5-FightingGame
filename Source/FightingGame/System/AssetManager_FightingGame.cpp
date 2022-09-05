@@ -2,6 +2,7 @@
 
 
 #include "AssetManager_FightingGame.h"
+#include "Engine/Engine.h"
 #include "Stats/StatsMisc.h"
 
 //~Static
@@ -12,8 +13,8 @@ UAssetManager_FightingGame& UAssetManager_FightingGame::Get()
 {
 	if (!Singleton)
 	{
-		Singleton = Cast<UAssetManager_FightingGame>(&UAssetManager::Get());
-		if (!Singleton) Singleton = NewObject<UAssetManager_FightingGame>();
+		Singleton = Cast<ThisClass>(GEngine->AssetManager.Get());
+		if (!Singleton) Singleton = NewObject<ThisClass>();
 	}
 	return *Singleton;
 }

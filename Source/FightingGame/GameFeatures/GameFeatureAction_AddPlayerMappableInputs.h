@@ -10,13 +10,13 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(meta = (DisplayName = "Add Player Mappable Inputs"))
 class FIGHTINGGAME_API UGameFeatureAction_AddPlayerMappableInputs : public UGameFeatureAction
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, meta=(ShortTooltip="Player Mappable Inputs - UEnhancedLocalPlayerInputSubsystem"))
-	TArray<FTaggedPlayerMappableInput_Pair> TaggedPlayerMappableInput_Pairs;
+	UPROPERTY(EditDefaultsOnly, meta = (DisplayName = "Mappable Input List"))
+	TArray<FTaggedPlayerMappableInput_Pair> MappableInputs_Pairs;
 
 public:
 

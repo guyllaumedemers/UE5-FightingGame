@@ -7,23 +7,23 @@
 void UGameFeatureAction_AddInputConfig::OnGameFeatureRegistering()
 {
 	Super::OnGameFeatureRegistering();
-	for (const auto& Config : InputConfigs) UInputConfig::Register(Config);
+	//for (const auto& Config : InputConfigs) UInputConfig::Register(Config);
 }
 
 void UGameFeatureAction_AddInputConfig::OnGameFeatureUnregistering()
 {
 	Super::OnGameFeatureUnregistering();
-	for (const auto& Config : InputConfigs) UInputConfig::Unregister(Config);
+	//for (const auto& Config : InputConfigs) UInputConfig::Unregister(Config);
 }
 
 void UGameFeatureAction_AddInputConfig::OnGameFeatureActivating(FGameFeatureActivatingContext& Context)
 {
 	Super::OnGameFeatureActivating(Context);
-	for (const auto& Config : InputConfigs) UInputConfig::Activate(Config);
+	for (const auto& Config : InputConfigs) UInputConfig::Register(Config);
 }
 
 void UGameFeatureAction_AddInputConfig::OnGameFeatureDeactivating(FGameFeatureDeactivatingContext& Context)
 {
 	Super::OnGameFeatureDeactivating(Context);
-	for (const auto& Config : InputConfigs) UInputConfig::Deactivate(Config);
+	for (const auto& Config : InputConfigs) UInputConfig::Unregister(Config);
 }

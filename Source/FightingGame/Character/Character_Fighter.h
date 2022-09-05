@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "ModularCharacter.h"
 #include "Character_Fighter.generated.h"
 
@@ -15,7 +16,7 @@ struct FInputActionInstance;
  * 
  */
 UCLASS()
-class FIGHTINGGAME_API ACharacter_Fighter : public AModularCharacter
+class FIGHTINGGAME_API ACharacter_Fighter : public AModularCharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -33,5 +34,8 @@ class FIGHTINGGAME_API ACharacter_Fighter : public AModularCharacter
 public:
 
 	ACharacter_Fighter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 };

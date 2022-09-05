@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/GameFrameworkComponent.h"
 #include "RaycastAnalyserComponent.generated.h"
 
 /**
  *
  */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class FIGHTINGGAME_API URaycastAnalyserComponent : public UActorComponent
+class FIGHTINGGAME_API URaycastAnalyserComponent : public UGameFrameworkComponent
 {
 	GENERATED_BODY()
 

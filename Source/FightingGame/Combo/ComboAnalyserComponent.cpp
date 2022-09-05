@@ -4,6 +4,7 @@
 #include "ComboAnalyserComponent.h"
 
 UComboAnalyserComponent::UComboAnalyserComponent(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bStartWithTickEnabled = true;
 	PrimaryComponentTick.bCanEverTick = true;

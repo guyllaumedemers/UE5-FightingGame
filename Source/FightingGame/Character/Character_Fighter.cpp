@@ -7,6 +7,7 @@
 #include "FightingGame/Player/RaycastAnalyserComponent.h"
 #include "FightingGame/Combo/ComboAnalyserComponent.h"
 #include "FightingGame/Inputs/EnhancedInputComponent_FightingGame.h"
+#include "FightingGame/Player/ModularPlayerState.h"
 #include "FightingGame/Settings/GameUserSettings_FightingGame.h"
 
 ACharacter_Fighter::ACharacter_Fighter(const FObjectInitializer& ObjectInitializer)
@@ -17,11 +18,26 @@ ACharacter_Fighter::ACharacter_Fighter(const FObjectInitializer& ObjectInitializ
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
 }
 
+void ACharacter_Fighter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (HealthComponent)
+	{
+		HealthComponent->OnPawnReady(*GetAbilitySystemComponent());
+	}
+}
+
+void ACharacter_Fighter::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+}
+
 void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	if(IsLocallyControlled() /*probably means the server will never fire &ThisClass::CaptureInput*/)
+	if (IsLocallyControlled() /*probably means the server will never fire &ThisClass::CaptureInput*/)
 	{
 		UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(PlayerInputComponent);
 
@@ -39,7 +55,7 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		check(ThisClassConfig);
 
-		for(const auto& TaggedInputAction_Pair : ThisClassConfig->GetInputAction_Pairs())
+		for (const auto& TaggedInputAction_Pair : ThisClassConfig->GetInputAction_Pairs())
 		{
 			// gameplaytag are only useful when we want to hard reference a unique delegate
 			EnhancedInputComponent->BindNativeAction(ThisClassConfig, TaggedInputAction_Pair.GetGameplayTag(), ETriggerEvent::Started, this, &ThisClass::CaptureInput);
@@ -47,15 +63,21 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	}
 }
 
+UAbilitySystemComponent* ACharacter_Fighter::GetAbilitySystemComponent() const
+{
+	return Cast<AModularPlayerState>(GetPlayerState())->GetAbilitySystemComponent();
+}
+
 void ACharacter_Fighter::CaptureInput(const FInputActionInstance& InputActionInstance)
 {
-	// How do I check if my action is canceled?
+	if (IsLocallyControlled() && !ActorHasTag("Ability.Status.Cancelled"))
+	{
+		// Send signal to Server and trigger animations events if valid
 
-	// Server send signal to trigger animations events
+		// While canceled, players cannot fire inputs
 
-	// While canceled, players cannot fire inputs
+		// UComboAnalyserComponent Should append its action list until a combo match is found while firing animation at every new "Combo" Valid - note : the above InputAction is a ComboEntry
 
-	// UComboAnalyserComponent Should append its action list until a combo match is found while firing animation at every new "Combo" Valid - note : the above InputAction is a ComboEntry
-
-	// this need to work with AttributeSet and GAS
+		// this need to work with AttributeSet and GAS	
+	}
 }

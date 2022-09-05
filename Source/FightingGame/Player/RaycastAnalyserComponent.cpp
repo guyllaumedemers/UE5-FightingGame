@@ -4,6 +4,7 @@
 #include "RaycastAnalyserComponent.h"
 
 URaycastAnalyserComponent::URaycastAnalyserComponent(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bStartWithTickEnabled = true;
 	PrimaryComponentTick.bCanEverTick = true;

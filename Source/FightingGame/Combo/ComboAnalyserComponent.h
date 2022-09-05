@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/GameFrameworkComponent.h"
 #include "ComboAnalyserComponent.generated.h"
 
 struct FInputActionInstance;
@@ -13,7 +13,7 @@ struct FCombo;
  *
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class FIGHTINGGAME_API UComboAnalyserComponent : public UActorComponent
+class FIGHTINGGAME_API UComboAnalyserComponent : public UGameFrameworkComponent
 {
 	GENERATED_BODY()
 

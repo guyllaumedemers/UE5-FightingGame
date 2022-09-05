@@ -3,22 +3,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/GameFrameworkComponent.h"
 #include "HealthComponent.generated.h"
 
+class UAbilitySystemComponent;
 class UHealthAttributeSet;
 
 /**
  *
  */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class FIGHTINGGAME_API UHealthComponent : public UActorComponent
+class FIGHTINGGAME_API UHealthComponent : public UGameFrameworkComponent
 {
 	GENERATED_BODY()
 
-	UHealthAttributeSet* HealthAttributeSet;
+	UPROPERTY()
+	const UHealthAttributeSet* HealthAttributeSet;
 
 public:
 
-	UHealthComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) {};
+	UHealthComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual bool OnPawnReady(const UAbilitySystemComponent& AbilitySystemComponent);
 };

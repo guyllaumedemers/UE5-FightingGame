@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
-#include "HealthAttributeSet.generated.h"
+#include "RageDriveAttributeSet.generated.h"
 
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
@@ -17,28 +17,23 @@
  * 
  */
 UCLASS()
-class FIGHTINGGAME_API UHealthAttributeSet : public UAttributeSet
+class FIGHTINGGAME_API URageDriveAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly)
-	FGameplayAttributeData CurrentHealth;
+	FGameplayAttributeData CurrentRageDriveLevel;
 
 	UPROPERTY(EditDefaultsOnly)
-	FGameplayAttributeData MaxHealth;
-
-	UPROPERTY(EditDefaultsOnly)
-	FGameplayAttributeData DamageDealt;
+	FGameplayAttributeData MaxRageDriveLevel;
 
 public:
 
-	UHealthAttributeSet()
-		: CurrentHealth(1.f)
-		, MaxHealth(1.f)
-		, DamageDealt(0.f)
+	URageDriveAttributeSet()
+		: CurrentRageDriveLevel(0.f)
+		, MaxRageDriveLevel(4.f)
 	{}
 
-	ATTRIBUTE_ACCESSORS(UHealthAttributeSet, CurrentHealth);
-	ATTRIBUTE_ACCESSORS(UHealthAttributeSet, MaxHealth);
-	ATTRIBUTE_ACCESSORS(UHealthAttributeSet, DamageDealt);
+	ATTRIBUTE_ACCESSORS(URageDriveAttributeSet, CurrentRageDriveLevel);
+	ATTRIBUTE_ACCESSORS(URageDriveAttributeSet, MaxRageDriveLevel);
 };

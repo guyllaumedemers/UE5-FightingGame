@@ -31,7 +31,7 @@ public:
 
 	URageDriveAttributeSet()
 		: CurrentRageDriveLevel(0.f)
-		, MaxRageDriveLevel(4.f)
+		, MaxRageDriveLevel(1.f)
 	{}
 
 	ATTRIBUTE_ACCESSORS(URageDriveAttributeSet, CurrentRageDriveLevel);

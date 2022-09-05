@@ -38,6 +38,11 @@ public class FightingCoreRuntime : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+                "CommonUI",
+                "EnhancedInput",
+                "GameplayAbilities",
+                "GameplayTags",
+                "GameplayTasks"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

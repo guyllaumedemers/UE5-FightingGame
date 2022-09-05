@@ -6,6 +6,9 @@
 #include "ModularCharacter.h"
 #include "Character_Fighter.generated.h"
 
+class URaycastAnalyserComponent;
+class UComboAnalyserComponent;
+class UHealthComponent;
 struct FInputActionInstance;
 
 /**
@@ -16,11 +19,14 @@ class FIGHTINGGAME_API ACharacter_Fighter : public AModularCharacter
 {
 	GENERATED_BODY()
 
-	// hold health
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<URaycastAnalyserComponent> RaycastAnalyserComponent;
 
-	// hold collision detection
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UComboAnalyserComponent> ComboAnalyserComponent;
 
-	// hold combo processing - animation cancelling
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UHealthComponent> HealthComponent;
 
 	void CaptureInput(const FInputActionInstance& InputActionInstance);
 

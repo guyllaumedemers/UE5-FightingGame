@@ -4,7 +4,7 @@
 #include "Character_Fighter.h"
 #include "GameFeaturesSubsystem.h"
 #include "HealthComponent.h"
-#include "FightingGame/Player/RaycastAnalyserComponent.h"
+#include "FightingGame/System/RaycastAnalyserComponent.h"
 #include "FightingGame/Combo/ComboAnalyserComponent.h"
 #include "FightingGame/Inputs/EnhancedInputComponent_FightingGame.h"
 #include "FightingGame/Settings/GameUserSettings_FightingGame.h"
@@ -21,7 +21,7 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	if(IsLocallyControlled() /*probably means the server will never fire &ThisClass::CaptureInput*/)
+	if(IsLocallyControlled())
 	{
 		UEnhancedInputComponent_FightingGame* EnhancedInputComponent = Cast<UEnhancedInputComponent_FightingGame>(PlayerInputComponent);
 
@@ -49,13 +49,11 @@ void ACharacter_Fighter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void ACharacter_Fighter::CaptureInput(const FInputActionInstance& InputActionInstance)
 {
-	// How do I check if my action is canceled?
+	/*if(GEngine)
+	{
+		FString PrintInputActionName = InputActionInstance.GetSourceAction()->GetName();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, *PrintInputActionName);
+	}*/
 
-	// Server send signal to trigger animations events
 
-	// While canceled, players cannot fire inputs
-
-	// UComboAnalyserComponent Should append its action list until a combo match is found while firing animation at every new "Combo" Valid - note : the above InputAction is a ComboEntry
-
-	// this need to work with AttributeSet and GAS
 }

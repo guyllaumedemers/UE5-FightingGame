@@ -40,10 +40,11 @@ Subsystem tracking Rounds Outcome & Match Outcome
 ### [PROJECT PATH](https://github.com/guyllaumedemers/UE5-FightingGame/tree/master/Source/FightingGame)
 
 ## Tasks
-- [ ] ?
-- [ ] ?
-- [ ] ?
-- [ ] ?
+- [x] Setup Input Bindings using GameFeatureAction
+- [ ] Setup Ability Bindings using GameFeatureAction
+- [x] Setup Player Mappable Inputs using GameFeatureAction and Register selection in UEnhancedInputLocalPlayerSubsystem
+- [ ] Setup Pawn Extension Component to interact with PrimaryDataAsset_Character 
+- [ ] Find Alternative to handle Enabling of GameFeatures at UWorld Start
 - [ ] ?
 
 ### Warning

@@ -44,6 +44,8 @@ void AModularPlayerController::OnPossess(APawn* InPawn)
 
 		GameState->GetGameplayTagContainer().GetGameplayTagArray(TagArrayHandle);
 
+		ensureMsgf(!TagArrayHandle.IsEmpty(), TEXT("Game State doesn't have GameplayTags set in the current Experience"));
+
 		for (const auto& InTag : TagArrayHandle)
 		{
 			const FPlayerMappableInput_Loaded& ActiveExperienceInput = UGameUserSettings_FightingGame::Get().Find(InTag);

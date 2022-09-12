@@ -50,3 +50,7 @@ Subsystem tracking Rounds Outcome & Match Outcome
 ### Warning
 
 > For obvious reasons, paid packages will be missing from this project. You can find them in UE Marketplace at the following link : [Fighting Animation Package used](https://www.unrealengine.com/marketplace/en-US/product/fight-animations-set)
+
+### Resources
+
+> Additional Resources required for understanding Unreal Engine can be found at the following links. [AlexForsythe](https://www.youtube.com/watch?v=IaU2Hue-ApI&ab_channel=AlexForsythe)

@@ -1,5 +1,5 @@
 # UE5-FightingGame - Project
-> Dummy project use for learning Unreal Engine underlay systems. Fighting game is expected to handle Online Gameplay, offer modular features & gameplay abilities while utilizing UAssetManager to handle memory usage.
+> Dummy project used for learning Unreal Engine underlay systems. Fighting game is expected to handle Online Gameplay, offer modular features & gameplay abilities while utilizing UAssetManager to handle memory usage.
 
 ## System Requirements
 - [ ] Gameplay Ability System

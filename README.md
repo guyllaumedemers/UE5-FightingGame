@@ -12,7 +12,6 @@
 ## Tasks
 - [ ] Wireframe project architecture, function prototype
 - [ ] Create UML diagram of logical and physical dependencies
-- [ ] 
 
 ### Warning
 

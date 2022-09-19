@@ -1,4 +1,4 @@
-# UE5-FightingGame - Project Breakdown
+# UE5-FightingGame - Project
 
 ## Tasks
 - [ ] Wireframe project architecture, function prototype

@@ -7,7 +7,7 @@
 - [ ] Enhanced Input System
 
 ## Input processing
-> An Input Buffer Component should be used on APlayerController to process the Hardware Input Stack retrieved from gamepad and flush the input captured in tick function after x amount of frames.
+> An Input Buffer Component should be used on APlayerController to process the Hardware Input Stack retrieved from gamepad and flush the input captured in tick function after x amount of frames. The resulting process will allow capture of complex input, hence creating Combo Strings.
 
 ## Tasks
 - [ ] Wireframe project architecture, function prototype

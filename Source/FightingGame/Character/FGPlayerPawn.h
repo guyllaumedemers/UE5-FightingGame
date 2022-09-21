@@ -28,5 +28,5 @@ public:
 
 public:
 
-	void OnCapture(const FInputActionInstance& InputActionInstance);
+	void OnPlayerInputCaptured(const FInputActionInstance& InputActionInstance);
 };

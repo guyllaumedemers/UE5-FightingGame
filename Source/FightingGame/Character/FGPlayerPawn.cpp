@@ -39,7 +39,7 @@ void AFGPlayerPawn::OnPosses()
 		{
 			for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
 			{
-				EnhancedInputComponent->BindNativeAction(PawnInputConfig_Loaded->PawnInputConfig, ActionListener.GameplayTag_InputAction_Registered, ETriggerEvent::Started, this, &ThisClass::OnCapture);
+				EnhancedInputComponent->BindNativeAction(PawnInputConfig_Loaded->PawnInputConfig, ActionListener.GameplayTag_InputAction_Registered, ETriggerEvent::Started, this, &ThisClass::OnPlayerInputCaptured);
 			}
 		}
 	}
@@ -63,7 +63,7 @@ void AFGPlayerPawn::OnUnPossess()
 	Super::OnUnPossess();
 }
 
-void AFGPlayerPawn::OnCapture(const FInputActionInstance& InputActionInstance)
+void AFGPlayerPawn::OnPlayerInputCaptured(const FInputActionInstance& InputActionInstance)
 {
 	if (ensureAlways(InputBufferComponent))
 	{

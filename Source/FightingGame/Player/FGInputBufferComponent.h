@@ -20,13 +20,22 @@ class FIGHTINGGAME_API UFGInputBufferComponent : public UActorComponent
 
 	FTimerHandle TimerHandle;
 
-	FORCEINLINE void Clear()
-	{
-		InputRegistered.Empty();
-	}
-
 	DECLARE_DELEGATE_RetVal_OneParam(bool, OnInputActionRegistered, const UInputAction* InAction);
 	OnInputActionRegistered OnInputActionRegisteredDel;
+
+	DECLARE_DELEGATE_OneParam(OnInputActionStackConsumed, const TArray<const UInputAction*>& InActionStack);
+	OnInputActionStackConsumed OnInputActionStackConsumedDel;
+
+	FORCEINLINE void Clear()
+	{
+		bool Result =
+			OnInputActionStackConsumedDel.ExecuteIfBound(InputRegistered);
+		if(!Result)
+		{
+			UE_LOG(LogTemp, Error, TEXT("OnInputActionStackConsumedDel Invalid, Require a Subscriber!"));
+		}
+		InputRegistered.Empty();
+	}
 
 public:
 
@@ -40,16 +49,31 @@ public:
 		{
 			InputRegistered.Add(InAction);
 		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Actor Input Action Perform Failed!"));
+			Clear();
+		}
 	}
 
-	FORCEINLINE void Subscribe(const TFunctionRef<bool(const UInputAction*)>& FncPtr)
+	FORCEINLINE void SubscribeOnInputActionRegistered(const TFunctionRef<bool(const UInputAction*)>& FncPtr)
 	{
 		OnInputActionRegisteredDel.BindLambda(FncPtr);
 	}
 
-	FORCEINLINE void UnSubscribe()
+	FORCEINLINE void UnSubscribeOnInputActionRegistered()
 	{
 		OnInputActionRegisteredDel.Unbind();
+	}
+
+	FORCEINLINE void SubscribeOnInputActionStackConsumed(const TFunctionRef<void(const TArray<const UInputAction*>&)>& FncPtr)
+	{
+		OnInputActionStackConsumedDel.BindLambda(FncPtr);
+	}
+
+	FORCEINLINE void UnSubscribeOnInputActionStackConsumed()
+	{
+		OnInputActionStackConsumedDel.Unbind();
 	}
 
 	virtual void BeginPlay() override;

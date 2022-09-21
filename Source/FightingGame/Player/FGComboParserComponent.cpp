@@ -17,7 +17,10 @@ void UFGComboParserComponent::BeginPlay()
 		UFGInputBufferComponent* const InputBufferComponent = Owner->FindComponentByClass<UFGInputBufferComponent>();
 		if (ensureAlways(InputBufferComponent))
 		{
-			InputBufferComponent->Subscribe([&](const UInputAction* InAction) { return IsValidCapture(InAction); }); /* (*this).IsValidCapture not working... why? TFunctionRef passed by const Reference.*/
+			InputBufferComponent->SubscribeOnInputActionStackConsumed([&](const TArray<const UInputAction*>& InActionStack)
+			{
+				ParseInputActionStack(InActionStack);
+			});
 		}
 	}
 }
@@ -30,15 +33,17 @@ void UFGComboParserComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		UFGInputBufferComponent* const InputBufferComponent = Owner->FindComponentByClass<UFGInputBufferComponent>();
 		if (ensureAlways(InputBufferComponent))
 		{
-			InputBufferComponent->UnSubscribe();
+			InputBufferComponent->UnSubscribeOnInputActionStackConsumed();
 		}
 	}
 
 	Super::EndPlay(EndPlayReason);
 }
 
-bool UFGComboParserComponent::IsValidCapture(const UInputAction* InAction)
+void UFGComboParserComponent::ParseInputActionStack(const TArray<const UInputAction*>& InActionStack)
 {
-	/*fill missing pieces*/
-	return true;
+	if(!InActionStack.IsEmpty())
+	{
+		/*Process Combo here*/
+	}
 }

@@ -39,9 +39,12 @@ void AFGPlayerPawn::OnUnPossess()
 	if (ensureAlways(EnhancedInputComponent))
 	{
 		const FGPawnInputConfig_Loaded* const PawnInputConfig_Loaded = nullptr; /*Retrieve from Settings?*/
-		for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
+		if (ensure(PawnInputConfig_Loaded))
 		{
-			EnhancedInputComponent->UnBindNativeAction(ActionListener.InputAction_Registered.Get());
+			for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
+			{
+				EnhancedInputComponent->UnBindNativeAction(ActionListener.InputAction_Registered.Get());
+			}
 		}
 	}
 

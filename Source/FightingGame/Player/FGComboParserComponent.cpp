@@ -24,11 +24,21 @@ void UFGComboParserComponent::BeginPlay()
 
 void UFGComboParserComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	const AActor* const Owner = GetOwner();
+	if (ensureAlways(Owner))
+	{
+		UFGInputBufferComponent* const InputBufferComponent = Owner->FindComponentByClass<UFGInputBufferComponent>();
+		if (ensureAlways(InputBufferComponent))
+		{
+			InputBufferComponent->UnSubscribe();
+		}
+	}
+
 	Super::EndPlay(EndPlayReason);
 }
 
 bool UFGComboParserComponent::IsValidCapture(const UInputAction* InAction)
 {
-
+	/*fill missing pieces*/
 	return true;
 }

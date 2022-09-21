@@ -29,6 +29,6 @@ void UFGComboParserComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool UFGComboParserComponent::IsValidCapture(const UInputAction* InAction)
 {
-	/* fill function*/
+
 	return true;
 }

@@ -15,6 +15,12 @@ void AFGPlayerController::BeginPlay()
 
 void AFGPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	UFGEnhancedInputComponent* const EnhancedComponent = Cast<UFGEnhancedInputComponent>(InputComponent);
+	if (ensureAlways(EnhancedComponent))
+	{
+		EnhancedComponent->UnRegisterHardwareInputBindings(GetLocalPlayer() /*Should unregister native inputs*/);
+	}
+
 	Super::EndPlay(EndPlayReason);
 }
 
@@ -25,7 +31,7 @@ void AFGPlayerController::SetupInputComponent()
 	UFGEnhancedInputComponent* const EnhancedComponent = Cast<UFGEnhancedInputComponent>(InputComponent);
 	if(ensureAlways(EnhancedComponent))
 	{
-		EnhancedComponent->RegisterHardwareInputBindings();
+		EnhancedComponent->RegisterHardwareInputBindings(GetLocalPlayer() /*Should register native inputs*/);
 	}
 }
 

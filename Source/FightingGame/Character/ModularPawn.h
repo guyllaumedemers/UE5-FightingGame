@@ -13,6 +13,9 @@ class FIGHTINGGAME_API AModularPawn : public APawn
 
 public:
 
+	virtual void PreInitializeComponents() override;
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void OnPosses() {};
 	virtual void OnUnPossess() {};
 };

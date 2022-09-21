@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EnhancedInputComponent.h"
-#include "FGEnhancedInputComponent.generated.h"
+#include "Components/ActorComponent.h"
+#include "FGHealthComponent.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
-class FIGHTINGGAME_API UFGEnhancedInputComponent : public UEnhancedInputComponent
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class FIGHTINGGAME_API UFGHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -18,6 +18,4 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	void RegisterHardwareInputBindings();
-	void UnRegisterHardwareInputBindings();
 };

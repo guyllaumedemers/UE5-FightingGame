@@ -13,15 +13,22 @@
 #define SECOND 1000
 #endif
 
+#ifndef FRAMEINTERVAL
+#define FRAMEINTERVAL 3
+#endif
+
 void UFGInputBufferComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = true;
 
 	const UWorld* const World = GetWorld();
 	if (ensureAlways(World))
 	{
 		FTimerManager& TimerManager = World->GetTimerManager();
-		TimerManager.SetTimer(TimerHandle, this, &UFGInputBufferComponent::Clear, (SECOND/FRAMERATE), true);
+		TimerManager.SetTimer(TimerHandle, this, &UFGInputBufferComponent::Clear, (SECOND/FRAMERATE) * FRAMEINTERVAL, true);
 	}
 }
 

@@ -5,7 +5,11 @@
 #include "FightingGame/Player/FGInputBufferComponent.h"
 
 AFGPlayerPawn::AFGPlayerPawn(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
+
 	InputBufferComponent = CreateDefaultSubobject<UFGInputBufferComponent>(UFGInputBufferComponent::StaticClass()->GetFName());
 }
 

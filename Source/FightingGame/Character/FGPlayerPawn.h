@@ -13,7 +13,7 @@ class FIGHTINGGAME_API AFGPlayerPawn : public AModularPawn
 {
 	GENERATED_BODY()
 
-	const UFGInputBufferComponent* InputBufferComponent;
+	TObjectPtr<UFGInputBufferComponent> InputBufferComponent;
 
 public:
 

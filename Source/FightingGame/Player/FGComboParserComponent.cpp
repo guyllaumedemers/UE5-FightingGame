@@ -8,6 +8,9 @@ void UFGComboParserComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = true;
+
 	const AActor* const Owner = GetOwner();
 	if(ensureAlways(Owner))
 	{
@@ -26,5 +29,6 @@ void UFGComboParserComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool UFGComboParserComponent::IsValidCapture(const UInputAction* InAction)
 {
+	/* fill function*/
 	return true;
 }

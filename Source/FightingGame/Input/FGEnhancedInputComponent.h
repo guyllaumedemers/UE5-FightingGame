@@ -18,7 +18,7 @@ class FIGHTINGGAME_API UFGEnhancedInputComponent : public UEnhancedInputComponen
 {
 	GENERATED_BODY()
 
-	TMap<const UInputAction*, FEnhancedInputActionValueBinding> EnhancedInputActionEventBindings; /*Unsafe, can be garbage collected*/
+	TMap<const UInputAction*, uint32> EnhancedInputActionEventBindings; /*Unsafe, can be garbage collected*/
 
 public:
 
@@ -44,8 +44,8 @@ void UFGEnhancedInputComponent::BindNativeAction(const UFGPawnInputConfig* InInp
 		const UInputAction* const OutInputAction = InInputConfig->Find(InGameplayTag);
 		if(ensure(OutInputAction))
 		{
-			const FEnhancedInputActionEventBinding& EnhancedInputActionEventBinding = BindAction(OutInputAction, InTriggerEvent, InOwner, InDelegate);
-			//EnhancedInputActionEventBindings.FindOrAdd(OutInputAction, EnhancedInputActionEventBinding);
+			const FEnhancedInputActionEventBinding& EnhancedInputActionValueBinding = BindAction(OutInputAction, InTriggerEvent, InOwner, InDelegate);
+			EnhancedInputActionEventBindings.FindOrAdd(OutInputAction, EnhancedInputActionValueBinding.GetHandle());
 		}
 	}
 }

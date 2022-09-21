@@ -42,6 +42,6 @@ void UFGEnhancedInputComponent::UnBindNativeAction(const UInputAction* const InI
 {
 	if(ensure(InInputAction))
 	{
-		/*Add removal when figuring out how to cache handle*/
+		EnhancedInputActionEventBindings.FindAndRemoveChecked(InInputAction);
 	}
 }

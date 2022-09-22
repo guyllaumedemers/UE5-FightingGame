@@ -44,6 +44,12 @@ void UFGComboParserComponent::ParseInputActionStack(const TArray<const UInputAct
 {
 	if(!InActionStack.IsEmpty())
 	{
-		/*Process Combo here*/
+		const TMap<const UInputAction*, FCombo_Pair> ComboPair_Map = TMap<const UInputAction*, FCombo_Pair>()/*stored somewhere*/;
+
+		for(const auto& InAction : InActionStack)
+		{
+			const FCombo_Pair* const Combo_Pair = ComboPair_Map.Find(InAction);
+			Add(Combo_Pair);
+		}
 	}
 }

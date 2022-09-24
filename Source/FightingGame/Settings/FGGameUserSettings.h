@@ -28,7 +28,7 @@ struct FInputSettingHandle
 		Inputs_Static.FindAndRemoveChecked(InPlayerMappable_GameplayTag);
 	}
 
-	FORCEINLINE const UPlayerMappableInputConfig* GetNativeInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag)
+	FORCEINLINE const UPlayerMappableInputConfig* FindNativeInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag)
 	{
 		const UPlayerMappableInputConfig** OutHandle = Inputs_Static.Find(InPlayerMappable_GameplayTag);
 		if(OutHandle)
@@ -50,7 +50,7 @@ struct FInputSettingHandle
 		Inputs_Dynamic.FindAndRemoveChecked(InPlayerMappable_GameplayTag);
 	}
 
-	FORCEINLINE const UPlayerMappableInputConfig* GetWorldInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag)
+	FORCEINLINE const UPlayerMappableInputConfig* FindWorldInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag)
 	{
 		const UPlayerMappableInputConfig** OutHandle = Inputs_Dynamic.Find(InPlayerMappable_GameplayTag);
 		if (OutHandle)
@@ -70,6 +70,9 @@ struct FInputSettingHandle
 	{
 		Inputs_Dynamic.Empty();
 	}
+
+	const TMap<FGameplayTag, const UPlayerMappableInputConfig*>& GetNativeInput() const { return Inputs_Static; }
+	const TMap<FGameplayTag, const UPlayerMappableInputConfig*>& GetWorldInput() const { return Inputs_Dynamic; }
 
 private:
 	
@@ -157,6 +160,8 @@ private:
 	TMap<FGameplayTag, const UCheatManagerExtension*> Cheats_Dynamic; /*Gameplay Cheats - UWorld Specific*/
 };
 
+class UEnhancedInputLocalPlayerSubsystem;
+
 /**
  * 
  */
@@ -171,4 +176,9 @@ class FIGHTINGGAME_API UFGGameUserSettings : public UGameUserSettings
 public:
 
 	virtual void BeginDestroy() override;
+
+public:
+
+	void RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem);
+	void UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem);
 };

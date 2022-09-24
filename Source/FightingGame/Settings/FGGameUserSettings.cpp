@@ -2,6 +2,7 @@
 
 
 #include "FGGameUserSettings.h"
+#include "EnhancedInputSubsystems.h"
 
 void UFGGameUserSettings::BeginDestroy()
 {
@@ -11,4 +12,20 @@ void UFGGameUserSettings::BeginDestroy()
 	InputSettingHandle.ClearWorldInputConfig();
 
 	Super::BeginDestroy();
+}
+
+void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem)
+{
+	for(const auto& InPair : InputSettingHandle.GetNativeInput())
+	{
+		InLocalPlayerSubsystem->AddPlayerMappableConfig(InPair.Value);
+	}
+}
+
+void UFGGameUserSettings::UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem)
+{
+	for (const auto& InPair : InputSettingHandle.GetNativeInput())
+	{
+		InLocalPlayerSubsystem->RemovePlayerMappableConfig(InPair.Value);
+	}
 }

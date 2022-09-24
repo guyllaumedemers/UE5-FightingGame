@@ -4,6 +4,8 @@
 #include "FGEnhancedInputComponent.h"
 #include "Engine/LocalPlayer.h"
 #include <EnhancedInputSubsystems.h>
+#include "Engine/Engine.h"
+#include "FightingGame/Settings/FGGameUserSettings.h"
 
 void UFGEnhancedInputComponent::BeginPlay()
 {
@@ -20,34 +22,46 @@ void UFGEnhancedInputComponent::EndPlay(const EEndPlayReason::Type EndPlayReason
 
 void UFGEnhancedInputComponent::RegisterHardwareInputBindings(const ULocalPlayer* const InLocalPlayer)
 {
-	//TODO Retrieve Hardware Input Bindings stored in Settings from the GameAction_Feature 
-	if(ensureAlways(InLocalPlayer))
+	if (ensureAlways(InLocalPlayer))
 	{
 		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
-		LocalPlayerSubsystem->AddPlayerMappableConfig(nullptr);
+		if (GEngine)
+		{
+			UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+			if (ensureAlways(GameUserSettings))
+			{
+				GameUserSettings->RegisterNativeInputConfig(LocalPlayerSubsystem);
+			}
+		}
 	}
 }
 
 void UFGEnhancedInputComponent::UnRegisterHardwareInputBindings(const ULocalPlayer* const InLocalPlayer)
 {
-	//TODO Retrieve Hardware Input Bindings stored in Settings from the GameAction_Feature 
 	if (ensureAlways(InLocalPlayer))
 	{
 		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
-		LocalPlayerSubsystem->RemovePlayerMappableConfig(nullptr);
+		if (GEngine)
+		{
+			UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+			if (ensureAlways(GameUserSettings))
+			{
+				GameUserSettings->UnRegisterNativeInputConfig(LocalPlayerSubsystem);
+			}
+		}
 	}
 }
 
 void UFGEnhancedInputComponent::UnBindNativeAction(const UInputAction* const InInputAction)
 {
-	if(ensure(InInputAction))
+	if (ensure(InInputAction))
 	{
 		uint32 InputBindingHandle = EnhancedInputActionEventBindings.FindAndRemoveChecked(InInputAction);
 
 		bool Result =
 			RemoveActionEventBinding(InputBindingHandle);
 
-		if(Result)
+		if (Result)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Input Binding %s removed"), *InInputAction->GetFName().ToString());
 		}

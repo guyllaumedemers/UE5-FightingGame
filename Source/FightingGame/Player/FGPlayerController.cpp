@@ -5,6 +5,8 @@
 #include "FightingGame/Character/ModularPawn.h"
 #include "FightingGame/Input/FGEnhancedInputComponent.h"
 
+FCheatHandle AFGPlayerController::CheatHandle = FCheatHandle(CheatHandle);
+
 void AFGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();

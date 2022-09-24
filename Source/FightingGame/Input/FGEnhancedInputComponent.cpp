@@ -42,6 +42,14 @@ void UFGEnhancedInputComponent::UnBindNativeAction(const UInputAction* const InI
 {
 	if(ensure(InInputAction))
 	{
-		EnhancedInputActionEventBindings.FindAndRemoveChecked(InInputAction);
+		uint32 InputBindingHandle = EnhancedInputActionEventBindings.FindAndRemoveChecked(InInputAction);
+
+		bool Result =
+			RemoveActionEventBinding(InputBindingHandle);
+
+		if(Result)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Input Binding %s removed"), *InInputAction->GetFName().ToString());
+		}
 	}
 }

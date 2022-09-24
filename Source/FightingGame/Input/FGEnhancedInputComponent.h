@@ -18,7 +18,8 @@ class FIGHTINGGAME_API UFGEnhancedInputComponent : public UEnhancedInputComponen
 {
 	GENERATED_BODY()
 
-	TMap<const UInputAction*, uint32> EnhancedInputActionEventBindings; /*Unsafe, can be garbage collected*/
+	UPROPERTY() /*Prevent Garbage collection of floating pointers?*/
+	TMap<const UInputAction*, uint32> EnhancedInputActionEventBindings;
 
 public:
 

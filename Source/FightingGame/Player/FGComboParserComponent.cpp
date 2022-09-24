@@ -44,6 +44,7 @@ void UFGComboParserComponent::ParseInputActionStack(const TArray<const UInputAct
 {
 	if(!InActionStack.IsEmpty())
 	{
+		//TODO Retrieve FCombo Pair information from UserSettings
 		const TMap<const UInputAction*, FCombo_Pair> ComboPair_Map = TMap<const UInputAction*, FCombo_Pair>()/*stored somewhere*/;
 
 		for(const auto& InAction : InActionStack)

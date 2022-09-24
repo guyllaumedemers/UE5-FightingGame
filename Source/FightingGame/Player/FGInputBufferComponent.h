@@ -30,6 +30,7 @@ class FIGHTINGGAME_API UFGInputBufferComponent : public UActorComponent
 	{
 		bool Result =
 			OnInputActionStackConsumedDel.ExecuteIfBound(InputRegistered);
+
 		if(!Result)
 		{
 			UE_LOG(LogTemp, Error, TEXT("OnInputActionStackConsumedDel Invalid, Require a Subscriber!"));

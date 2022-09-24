@@ -39,7 +39,11 @@ void AFGPlayerPawn::OnPosses()
 		{
 			for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
 			{
-				EnhancedInputComponent->BindNativeAction(PawnInputConfig_Loaded->PawnInputConfig, ActionListener.GameplayTag_InputAction_Registered, ETriggerEvent::Started, this, &ThisClass::OnPlayerInputCaptured);
+				EnhancedInputComponent->BindNativeAction(PawnInputConfig_Loaded->PawnInputConfig,
+					ActionListener.GameplayTag_InputAction_Registered,
+					ETriggerEvent::Started,
+					this,
+					&ThisClass::OnPlayerInputCaptured);
 			}
 		}
 	}

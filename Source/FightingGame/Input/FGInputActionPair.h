@@ -4,10 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "InputAction.h"
 #include "Engine/DataAsset.h"
 #include "FGInputActionPair.generated.h"
-
-class UInputAction;
 
 /**
  *
@@ -37,7 +36,11 @@ class FIGHTINGGAME_API UFGPawnInputConfig : public UPrimaryDataAsset
 
 public:
 
-	const UInputAction* const Find(const FGameplayTag& InGameplayTag) const;
+	FORCEINLINE const UInputAction* const Find(const FGameplayTag& InGameplayTag) const
+	{
+		uint32 Index = InputAction_Pairs.IndexOfByPredicate([&](const FGInputAction_Pair_Registered& InEntry) { return InEntry.GameplayTag_InputAction_Registered == InGameplayTag; });
+		return Index != INDEX_NONE ? InputAction_Pairs[Index].InputAction_Registered.Get() : nullptr;
+	}
 
 	const TArray<FGInputAction_Pair_Registered>& GetInputPairs() const { return InputAction_Pairs; }
 };

@@ -14,7 +14,7 @@ void UFGGameUserSettings::BeginDestroy()
 	Super::BeginDestroy();
 }
 
-void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem)
+void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const
 {
 	for(const auto& InPair : InputSettingHandle.GetNativeInput())
 	{
@@ -22,7 +22,7 @@ void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSub
 	}
 }
 
-void UFGGameUserSettings::UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem)
+void UFGGameUserSettings::UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const
 {
 	for (const auto& InPair : InputSettingHandle.GetNativeInput())
 	{

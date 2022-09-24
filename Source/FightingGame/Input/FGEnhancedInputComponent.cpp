@@ -27,7 +27,7 @@ void UFGEnhancedInputComponent::RegisterHardwareInputBindings(const ULocalPlayer
 		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
 		if (GEngine)
 		{
-			UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+			const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
 			if (ensureAlways(GameUserSettings))
 			{
 				GameUserSettings->RegisterNativeInputConfig(LocalPlayerSubsystem);
@@ -43,7 +43,7 @@ void UFGEnhancedInputComponent::UnRegisterHardwareInputBindings(const ULocalPlay
 		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
 		if (GEngine)
 		{
-			UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+			const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
 			if (ensureAlways(GameUserSettings))
 			{
 				GameUserSettings->UnRegisterNativeInputConfig(LocalPlayerSubsystem);

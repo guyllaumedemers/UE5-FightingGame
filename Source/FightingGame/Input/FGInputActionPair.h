@@ -24,7 +24,7 @@ struct FGInputAction_Pair_Registered /*This will load the Pawn Input Action to l
 };
 
 UCLASS()
-class FIGHTINGGAME_API UFGPawnInputConfig : public UPrimaryDataAsset
+class FIGHTINGGAME_API UFGPawnInputBinding_Pair : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 

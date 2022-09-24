@@ -12,14 +12,14 @@
 
 class UPlayerMappableInputConfig;
 
-struct FInputSettingHandle
+struct FSettingHandle_InputConfig
 {
-	FInputSettingHandle()
+	FSettingHandle_InputConfig()
 		: Inputs_Static(TMap<FGameplayTag, const UPlayerMappableInputConfig*>())
 		, Inputs_Dynamic(TMap<FGameplayTag, const UPlayerMappableInputConfig*>())
 	{}
 
-	~FInputSettingHandle()
+	~FSettingHandle_InputConfig()
 	{}
 
 	FORCEINLINE void AddNativeInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag
@@ -85,7 +85,7 @@ private:
 	TMap<FGameplayTag, const UPlayerMappableInputConfig*> Inputs_Dynamic; /*Gameplay Inputs - UWorld Specific*/
 };
 
-struct FGameModeSettingHandle
+struct FSettingHandle_GameCheat
 {
 	/**
 	 *	Game Mode Sets base logic like which pawn to load, playercontroller, etc... but doesnt allow Runtime customization via UserSettings of Gameplay Cheats.
@@ -100,12 +100,12 @@ struct FGameModeSettingHandle
 	 *
 	 */
 
-	FGameModeSettingHandle()
+	FSettingHandle_GameCheat()
 		: Cheats_Static(TMap<FGameplayTag, const UCheatManagerExtension*>())
 		, Cheats_Dynamic(TMap<FGameplayTag, const UCheatManagerExtension*>())
 	{}
 
-	~FGameModeSettingHandle()
+	~FSettingHandle_GameCheat()
 	{}
 
 	FORCEINLINE void AddNativeCheatExtension(const FGameplayTag & InCheatExtension_GameplayTag
@@ -168,18 +168,18 @@ private:
 	TMap<FGameplayTag, const UCheatManagerExtension*> Cheats_Dynamic; /*Gameplay Cheats - UWorld Specific*/
 };
 
-class UFGPawnInputConfig;
+class UFGPawnInputBinding_Pair;
 
-struct FPawnBindingSettingHandle
+struct FSettingHandle_PawnInputBinding
 {
-	FPawnBindingSettingHandle()
-		: PawnInputBindings(TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*>())
+	FSettingHandle_PawnInputBinding()
+		: PawnInputBindings(TMap<TSubclassOf<APawn>, const UFGPawnInputBinding_Pair*>())
 	{}
 
-	~FPawnBindingSettingHandle()
+	~FSettingHandle_PawnInputBinding()
 	{}
 
-	FORCEINLINE void AddPawnInputBindings(TSubclassOf<APawn> InPawn, const UFGPawnInputConfig* const InPawnBindings)
+	FORCEINLINE void AddPawnInputBindings(TSubclassOf<APawn> InPawn, const UFGPawnInputBinding_Pair* const InPawnBindings)
 	{
 		PawnInputBindings.FindOrAdd(InPawn, InPawnBindings);
 	}
@@ -189,9 +189,9 @@ struct FPawnBindingSettingHandle
 		PawnInputBindings.FindAndRemoveChecked(InPawn);
 	}
 
-	FORCEINLINE const UFGPawnInputConfig* FindPawnInputBindings(TSubclassOf<APawn> InPawn)
+	FORCEINLINE const UFGPawnInputBinding_Pair* FindPawnInputBindings(TSubclassOf<APawn> InPawn)
 	{
-		const UFGPawnInputConfig** OutHandle = PawnInputBindings.Find(InPawn);
+		const UFGPawnInputBinding_Pair** OutHandle = PawnInputBindings.Find(InPawn);
 		if (OutHandle)
 		{
 			return *OutHandle;
@@ -205,11 +205,11 @@ struct FPawnBindingSettingHandle
 		PawnInputBindings.Empty();
 	}
 
-	const TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*>& GetPawnBindings() const { return PawnInputBindings; }
+	const TMap<TSubclassOf<APawn>, const UFGPawnInputBinding_Pair*>& GetPawnBindings() const { return PawnInputBindings; }
 
 private:
 
-	TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*> PawnInputBindings;
+	TMap<TSubclassOf<APawn>, const UFGPawnInputBinding_Pair*> PawnInputBindings;
 };
 
 class UEnhancedInputLocalPlayerSubsystem;
@@ -223,9 +223,9 @@ class FIGHTINGGAME_API UFGGameUserSettings : public UGameUserSettings
 {
 	GENERATED_BODY()
 
-	FGameModeSettingHandle GameModeSettingHandle; /*Should make sure that AGameModeBase::AllowCheats true in practice mode*/
-	FInputSettingHandle InputSettingHandle;
-	FPawnBindingSettingHandle PawnBindingSettingHandle;
+	FSettingHandle_GameCheat SettingHandle_GameCheat; /*Should make sure that AGameModeBase::AllowCheats true in practice mode*/
+	FSettingHandle_InputConfig SettingHandle_InputConfig;
+	FSettingHandle_PawnInputBinding SettingHandle_PawnInputBinding;
 
 public:
 
@@ -238,6 +238,7 @@ public:
 
 	template<typename UserClass, typename FncPtr>
 	void RegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent, UserClass* InUser, FncPtr InFncPtr);
+
 	template<typename UserClass>
 	void UnRegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent, UserClass* InUser);
 };
@@ -248,13 +249,13 @@ void UFGGameUserSettings::RegisterPawnInputBindings(UFGEnhancedInputComponent* c
 {
 	if (ensureAlways(InEnhancedInputComponent) && ensureAlways(InUser))
 	{
-		const UFGPawnInputConfig* const PawnInputBindings = PawnBindingSettingHandle.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass())); /*Unsafe ptr access*/
-		if (ensure(PawnInputBindings))
+		const UFGPawnInputBinding_Pair* const PawnInputBinding_Pair = SettingHandle_PawnInputBinding.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass())); /*Unsafe ptr access*/
+		if (ensure(PawnInputBinding_Pair))
 		{
-			for (const auto& InPair : PawnInputBindings->GetInputBindingPairs())
+			for (const auto& InActionBinding_Pair : PawnInputBinding_Pair->GetInputBindingPairs())
 			{
-				InEnhancedInputComponent->BindNativeAction(PawnInputBindings,
-					InPair.GameplayTag_InputAction_Registered,
+				InEnhancedInputComponent->BindNativeAction(PawnInputBinding_Pair,
+					InActionBinding_Pair.GameplayTag_InputAction_Registered,
 					ETriggerEvent::Started,
 					InUser,
 					InFncPtr);
@@ -269,10 +270,10 @@ void UFGGameUserSettings::UnRegisterPawnInputBindings(UFGEnhancedInputComponent*
 {
 	if (ensureAlways(InEnhancedInputComponent) && ensureAlways(InUser))
 	{
-		const UFGPawnInputConfig* const PawnInputBindings = PawnBindingSettingHandle.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass()));
-		if (ensure(PawnInputBindings))
+		const UFGPawnInputBinding_Pair* const PawnInputBinding_Pair = SettingHandle_PawnInputBinding.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass()));
+		if (ensure(PawnInputBinding_Pair))
 		{
-			for (const auto& InActionBinding_Pair : PawnInputBindings->GetInputBindingPairs())
+			for (const auto& InActionBinding_Pair : PawnInputBinding_Pair->GetInputBindingPairs())
 			{
 				InEnhancedInputComponent->UnBindNativeAction(InActionBinding_Pair.InputAction_Registered.Get());
 			}

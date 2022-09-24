@@ -6,11 +6,11 @@
 
 void UFGGameUserSettings::BeginDestroy()
 {
-	GameModeSettingHandle.ClearNativeCheatExtensions();
-	GameModeSettingHandle.ClearWorldCheatExtensions();
-	InputSettingHandle.ClearNativeInputConfig();
-	InputSettingHandle.ClearWorldInputConfig();
-	PawnBindingSettingHandle.ClearPawnInputBindings();
+	SettingHandle_GameCheat.ClearNativeCheatExtensions();
+	SettingHandle_GameCheat.ClearWorldCheatExtensions();
+	SettingHandle_InputConfig.ClearNativeInputConfig();
+	SettingHandle_InputConfig.ClearWorldInputConfig();
+	SettingHandle_PawnInputBinding.ClearPawnInputBindings();
 
 	Super::BeginDestroy();
 }
@@ -19,9 +19,9 @@ void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSub
 {
 	if(ensureAlways(InLocalPlayerSubsystem))
 	{
-		for (const auto& InPair : InputSettingHandle.GetNativeInput())
+		for (const auto& InNativeInputPair : SettingHandle_InputConfig.GetNativeInput())
 		{
-			InLocalPlayerSubsystem->AddPlayerMappableConfig(InPair.Value);
+			InLocalPlayerSubsystem->AddPlayerMappableConfig(InNativeInputPair.Value);
 		}
 	}
 }
@@ -30,9 +30,9 @@ void UFGGameUserSettings::UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerS
 {
 	if(ensureAlways(InLocalPlayerSubsystem))
 	{
-		for (const auto& InPair : InputSettingHandle.GetNativeInput())
+		for (const auto& InNativeInputPair : SettingHandle_InputConfig.GetNativeInput())
 		{
-			InLocalPlayerSubsystem->RemovePlayerMappableConfig(InPair.Value);
+			InLocalPlayerSubsystem->RemovePlayerMappableConfig(InNativeInputPair.Value);
 		}
 	}
 }

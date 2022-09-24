@@ -31,13 +31,13 @@ public:
 public:
 
 	template<typename UserClass, typename FncPtr>
-	void BindNativeAction(const UFGPawnInputConfig* InInputConfig, const FGameplayTag& InGameplayTag, ETriggerEvent InTriggerEvent, UserClass* InOwner, FncPtr InDelegate);
+	void BindNativeAction(const UFGPawnInputBinding_Pair* InInputConfig, const FGameplayTag& InGameplayTag, ETriggerEvent InTriggerEvent, UserClass* InOwner, FncPtr InDelegate);
 
 	void UnBindNativeAction(const UInputAction* const InInputAction);
 };
 
 template <typename UserClass, typename FncPtr>
-void UFGEnhancedInputComponent::BindNativeAction(const UFGPawnInputConfig* InInputConfig, const FGameplayTag& InGameplayTag, ETriggerEvent InTriggerEvent,
+void UFGEnhancedInputComponent::BindNativeAction(const UFGPawnInputBinding_Pair* InInputConfig, const FGameplayTag& InGameplayTag, ETriggerEvent InTriggerEvent,
 	UserClass* InOwner, FncPtr InDelegate)
 {
 	if(ensure(InInputConfig))

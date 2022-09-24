@@ -2,10 +2,10 @@
 
 
 #include "FGPlayerPawn.h"
-#include "FightingGame/Input/FGEnhancedInputComponent.h"
-#include "FightingGame/Input/FGInputActionPair.h"
+#include "Engine/Engine.h"
 #include "FightingGame/Player/FGComboParserComponent.h"
 #include "FightingGame/Player/FGInputBufferComponent.h"
+#include "FightingGame/Settings/FGGameUserSettings.h"
 
 AFGPlayerPawn::AFGPlayerPawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -32,19 +32,14 @@ void AFGPlayerPawn::OnPosses()
 	Super::OnPosses();
 
 	UFGEnhancedInputComponent* const EnhancedInputComponent = Cast<UFGEnhancedInputComponent>(InputComponent);
-	if (ensureAlways(EnhancedInputComponent))
+	if (ensureAlways(EnhancedInputComponent) && ensureAlways(GEngine))
 	{
-		const FGPawnInputConfig_Loaded* const PawnInputConfig_Loaded = nullptr; /*Retrieve from Settings?*/
-		if (ensure(PawnInputConfig_Loaded))
+		UFGGameUserSettings* const GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+		if (ensureAlways(GameUserSettings))
 		{
-			for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
-			{
-				EnhancedInputComponent->BindNativeAction(PawnInputConfig_Loaded->PawnInputConfig,
-					ActionListener.GameplayTag_InputAction_Registered,
-					ETriggerEvent::Started,
-					this,
-					&ThisClass::OnPlayerInputCaptured);
-			}
+			GameUserSettings->RegisterPawnInputBindings(EnhancedInputComponent, 
+				this,
+				&ThisClass::OnPlayerInputCaptured);
 		}
 	}
 }
@@ -52,15 +47,12 @@ void AFGPlayerPawn::OnPosses()
 void AFGPlayerPawn::OnUnPossess()
 {
 	UFGEnhancedInputComponent* const EnhancedInputComponent = Cast<UFGEnhancedInputComponent>(InputComponent);
-	if (ensureAlways(EnhancedInputComponent))
+	if (ensureAlways(EnhancedInputComponent) && ensureAlways(GEngine))
 	{
-		const FGPawnInputConfig_Loaded* const PawnInputConfig_Loaded = nullptr; /*Retrieve from Settings?*/
-		if (ensure(PawnInputConfig_Loaded))
+		UFGGameUserSettings* const GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+		if (ensureAlways(GameUserSettings))
 		{
-			for (const auto& ActionListener : PawnInputConfig_Loaded->PawnInputConfig->GetInputPairs())
-			{
-				EnhancedInputComponent->UnBindNativeAction(ActionListener.InputAction_Registered.Get());
-			}
+			GameUserSettings->UnRegisterPawnInputBindings(EnhancedInputComponent, this);
 		}
 	}
 

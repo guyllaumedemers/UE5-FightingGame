@@ -17,6 +17,11 @@ struct FCheatHandle
 		: CheatManagerHandle(nullptr)
 	{}
 
+	~FCheatHandle()
+	{
+		delete CheatManagerHandle;
+	}
+
 	/**
 	 *	Cheat Extension State should respond via Delegate calls from Adding, Removing, Enabling, etc...
 	 *	from the GameUserSettings.

@@ -10,22 +10,29 @@ void UFGGameUserSettings::BeginDestroy()
 	GameModeSettingHandle.ClearWorldCheatExtensions();
 	InputSettingHandle.ClearNativeInputConfig();
 	InputSettingHandle.ClearWorldInputConfig();
+	PawnBindingSettingHandle.ClearPawnInputBindings();
 
 	Super::BeginDestroy();
 }
 
 void UFGGameUserSettings::RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const
 {
-	for(const auto& InPair : InputSettingHandle.GetNativeInput())
+	if(ensureAlways(InLocalPlayerSubsystem))
 	{
-		InLocalPlayerSubsystem->AddPlayerMappableConfig(InPair.Value);
+		for (const auto& InPair : InputSettingHandle.GetNativeInput())
+		{
+			InLocalPlayerSubsystem->AddPlayerMappableConfig(InPair.Value);
+		}
 	}
 }
 
 void UFGGameUserSettings::UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const
 {
-	for (const auto& InPair : InputSettingHandle.GetNativeInput())
+	if(ensureAlways(InLocalPlayerSubsystem))
 	{
-		InLocalPlayerSubsystem->RemovePlayerMappableConfig(InPair.Value);
+		for (const auto& InPair : InputSettingHandle.GetNativeInput())
+		{
+			InLocalPlayerSubsystem->RemovePlayerMappableConfig(InPair.Value);
+		}
 	}
 }

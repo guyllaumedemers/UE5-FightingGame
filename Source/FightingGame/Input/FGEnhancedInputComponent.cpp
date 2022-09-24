@@ -17,37 +17,31 @@ void UFGEnhancedInputComponent::BeginPlay()
 
 void UFGEnhancedInputComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	EnhancedInputActionEventBindings.Empty();
+
 	Super::EndPlay(EndPlayReason);
 }
 
 void UFGEnhancedInputComponent::RegisterHardwareInputBindings(const ULocalPlayer* const InLocalPlayer)
 {
-	if (ensureAlways(InLocalPlayer))
+	if (ensureAlways(InLocalPlayer) && ensureAlways(GEngine))
 	{
-		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
-		if (GEngine)
+		const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+		if (ensureAlways(GameUserSettings))
 		{
-			const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
-			if (ensureAlways(GameUserSettings))
-			{
-				GameUserSettings->RegisterNativeInputConfig(LocalPlayerSubsystem);
-			}
+			GameUserSettings->RegisterNativeInputConfig(ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer));
 		}
 	}
 }
 
 void UFGEnhancedInputComponent::UnRegisterHardwareInputBindings(const ULocalPlayer* const InLocalPlayer)
 {
-	if (ensureAlways(InLocalPlayer))
+	if (ensureAlways(InLocalPlayer) && ensureAlways(GEngine))
 	{
-		UEnhancedInputLocalPlayerSubsystem* const LocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer);
-		if (GEngine)
+		const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
+		if (ensureAlways(GameUserSettings))
 		{
-			const UFGGameUserSettings* GameUserSettings = Cast<UFGGameUserSettings>(GEngine->GetGameUserSettings());
-			if (ensureAlways(GameUserSettings))
-			{
-				GameUserSettings->UnRegisterNativeInputConfig(LocalPlayerSubsystem);
-			}
+			GameUserSettings->UnRegisterNativeInputConfig(ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(InLocalPlayer));
 		}
 	}
 }

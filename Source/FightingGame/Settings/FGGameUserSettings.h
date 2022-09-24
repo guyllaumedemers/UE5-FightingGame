@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "FightingGame/Input/FGEnhancedInputComponent.h"
 #include "GameFramework/CheatManager.h"
 #include "GameFramework/GameUserSettings.h"
+#include "GameFramework/Pawn.h"
 #include "FGGameUserSettings.generated.h"
 
 class UPlayerMappableInputConfig;
@@ -15,6 +17,9 @@ struct FInputSettingHandle
 	FInputSettingHandle()
 		: Inputs_Static(TMap<FGameplayTag, const UPlayerMappableInputConfig*>())
 		, Inputs_Dynamic(TMap<FGameplayTag, const UPlayerMappableInputConfig*>())
+	{}
+
+	~FInputSettingHandle()
 	{}
 
 	FORCEINLINE void AddNativeInputConfig(const FGameplayTag& InPlayerMappable_GameplayTag
@@ -100,6 +105,9 @@ struct FGameModeSettingHandle
 		, Cheats_Dynamic(TMap<FGameplayTag, const UCheatManagerExtension*>())
 	{}
 
+	~FGameModeSettingHandle()
+	{}
+
 	FORCEINLINE void AddNativeCheatExtension(const FGameplayTag & InCheatExtension_GameplayTag
 		, const UCheatManagerExtension* const InCheatExtension)
 	{
@@ -160,7 +168,52 @@ private:
 	TMap<FGameplayTag, const UCheatManagerExtension*> Cheats_Dynamic; /*Gameplay Cheats - UWorld Specific*/
 };
 
+class UFGPawnInputConfig;
+
+struct FPawnBindingSettingHandle
+{
+	FPawnBindingSettingHandle()
+		: PawnInputBindings(TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*>())
+	{}
+
+	~FPawnBindingSettingHandle()
+	{}
+
+	FORCEINLINE void AddPawnInputBindings(TSubclassOf<APawn> InPawn, const UFGPawnInputConfig* const InPawnBindings)
+	{
+		PawnInputBindings.FindOrAdd(InPawn, InPawnBindings);
+	}
+
+	FORCEINLINE void RemovePawnInputBindings(TSubclassOf<APawn> InPawn)
+	{
+		PawnInputBindings.FindAndRemoveChecked(InPawn);
+	}
+
+	FORCEINLINE const UFGPawnInputConfig* FindPawnInputBindings(TSubclassOf<APawn> InPawn)
+	{
+		const UFGPawnInputConfig** OutHandle = PawnInputBindings.Find(InPawn);
+		if (OutHandle)
+		{
+			return *OutHandle;
+		}
+		UE_LOG(LogTemp, Error, TEXT("%s Invalid."), *(InPawn->GetFName().ToString()));
+		return nullptr;
+	}
+
+	FORCEINLINE void ClearPawnInputBindings()
+	{
+		PawnInputBindings.Empty();
+	}
+
+	const TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*>& GetPawnBindings() const { return PawnInputBindings; }
+
+private:
+
+	TMap<TSubclassOf<APawn>, const UFGPawnInputConfig*> PawnInputBindings;
+};
+
 class UEnhancedInputLocalPlayerSubsystem;
+struct FInputActionInstance;
 
 /**
  * 
@@ -172,6 +225,7 @@ class FIGHTINGGAME_API UFGGameUserSettings : public UGameUserSettings
 
 	FGameModeSettingHandle GameModeSettingHandle; /*Should make sure that AGameModeBase::AllowCheats true in practice mode*/
 	FInputSettingHandle InputSettingHandle;
+	FPawnBindingSettingHandle PawnBindingSettingHandle;
 
 public:
 
@@ -181,4 +235,47 @@ public:
 
 	void RegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const;
 	void UnRegisterNativeInputConfig(UEnhancedInputLocalPlayerSubsystem* const InLocalPlayerSubsystem) const;
+
+	template<typename UserClass, typename FncPtr>
+	void RegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent, UserClass* InUser, FncPtr InFncPtr);
+	template<typename UserClass>
+	void UnRegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent, UserClass* InUser);
 };
+
+template <typename UserClass, typename FncPtr>
+void UFGGameUserSettings::RegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent,
+	UserClass* InUser, FncPtr InFncPtr)
+{
+	if (ensureAlways(InEnhancedInputComponent) && ensureAlways(InUser))
+	{
+		const UFGPawnInputConfig* const PawnInputBindings = PawnBindingSettingHandle.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass())); /*Unsafe ptr access*/
+		if (ensure(PawnInputBindings))
+		{
+			for (const auto& InPair : PawnInputBindings->GetInputBindingPairs())
+			{
+				InEnhancedInputComponent->BindNativeAction(PawnInputBindings,
+					InPair.GameplayTag_InputAction_Registered,
+					ETriggerEvent::Started,
+					InUser,
+					InFncPtr);
+			}
+		}
+	}
+}
+
+template <typename UserClass>
+void UFGGameUserSettings::UnRegisterPawnInputBindings(UFGEnhancedInputComponent* const InEnhancedInputComponent,
+	UserClass* InUser)
+{
+	if (ensureAlways(InEnhancedInputComponent) && ensureAlways(InUser))
+	{
+		const UFGPawnInputConfig* const PawnInputBindings = PawnBindingSettingHandle.FindPawnInputBindings(TSubclassOf<APawn>(Cast<APawn>(InUser)->GetClass()));
+		if (ensure(PawnInputBindings))
+		{
+			for (const auto& InActionBinding_Pair : PawnInputBindings->GetInputBindingPairs())
+			{
+				InEnhancedInputComponent->UnBindNativeAction(InActionBinding_Pair.InputAction_Registered.Get());
+			}
+		}
+	}
+}

@@ -42,16 +42,5 @@ public:
 		return Index != INDEX_NONE ? InputAction_Pairs[Index].InputAction_Registered.Get() : nullptr;
 	}
 
-	const TArray<FGInputAction_Pair_Registered>& GetInputPairs() const { return InputAction_Pairs; }
-};
-
-struct FGPawnInputConfig_Loaded /*This will cache the Pair InputAction-GameplayTag during runtime*/
-{
-	FGPawnInputConfig_Loaded(const UFGPawnInputConfig* const InPawnInputConfig, const APawn* const InPawnSubclass)
-		: PawnInputConfig(InPawnInputConfig)
-		, PawnSubclass(InPawnSubclass)
-	{}
-
-	const UFGPawnInputConfig* const PawnInputConfig;
-	const APawn* const PawnSubclass;
+	const TArray<FGInputAction_Pair_Registered>& GetInputBindingPairs() const { return InputAction_Pairs; }
 };

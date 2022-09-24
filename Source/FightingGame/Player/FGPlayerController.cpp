@@ -5,7 +5,7 @@
 #include "FightingGame/Character/ModularPawn.h"
 #include "FightingGame/Input/FGEnhancedInputComponent.h"
 
-FCheatHandle AFGPlayerController::CheatHandle = FCheatHandle(CheatHandle);
+FCheatHandle AFGPlayerController::CheatHandle = FCheatHandle();
 
 void AFGPlayerController::BeginPlay()
 {
@@ -13,6 +13,8 @@ void AFGPlayerController::BeginPlay()
 
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	CheatHandle = FCheatHandle(CheatManager);
 }
 
 void AFGPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)

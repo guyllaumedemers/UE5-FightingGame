@@ -19,7 +19,7 @@ struct FCheatHandle
 
 	~FCheatHandle()
 	{
-		delete CheatManagerHandle;
+		CheatManagerHandle = nullptr;
 	}
 
 	/**
